@@ -34,9 +34,6 @@ import {
 import {
   HttpClient,
   HttpEvent,
-  HttpEventType,
-  HttpRequest,
-  HttpResponse,
 } from '@angular/common/http';
 import {
   Observable,
@@ -44,16 +41,15 @@ import {
   Subject,
   concat,
   debounceTime,
-  filter,
   forkJoin,
-  last,
   map,
   mergeMap,
   of,
+  range,
+  reduce,
   retry,
   shareReplay,
   switchMap,
-  takeWhile,
   withLatestFrom,
 } from 'rxjs';
 import { ViewStateService } from '../view-state.service';
@@ -70,7 +66,8 @@ import { UploadToken } from 'src/app/common/schema/form-types';
   providedIn: 'root',
 })
 export class BackendAPIImpl implements BackendAPI {
-  private readonly MAX_INSPECTION_DATA_DOWNLOAD_CHUNK_SIZE = 16 * 1024 * 1024;
+  private readonly MAX_INSPECTION_DATA_DOWNLOAD_CHUNK_SIZE = 1 * 1024 * 1024;
+  private readonly DATA_DOWNLOAD_CONCURRENCY = 10;
 
   /**
    * The base address of the backend server.
@@ -186,76 +183,56 @@ export class BackendAPIImpl implements BackendAPI {
   }
 
   public getInspectionData(taskId: string, reporter: DownloadProgressReporter) {
-    const receivedBuffers = [] as ArrayBuffer[];
-    let loadedBytes = 0;
-    const responseSubject = new ReplaySubject<Blob | null>(1);
-    const partialRequestsSubject = new Subject<HttpRequest<ArrayBuffer>>();
-    partialRequestsSubject
-      .pipe(
-        mergeMap((request) =>
-          this.http.request<ArrayBuffer>(request).pipe(
-            filter((event) => event.type === HttpEventType.Response),
-            map((response) => response as HttpResponse<ArrayBuffer>),
-            last(),
-          ),
-        ),
-        takeWhile((response) => {
-          if (!response.body)
-            throw new Error('unexpected response. body is null.');
-          return response.body.byteLength > 0;
-        }),
-      )
-      .subscribe({
-        next: (chunk) => {
-          receivedBuffers.push(chunk.body!);
-          loadedBytes += chunk.body!.byteLength;
-          // request the next chunk
-          partialRequestsSubject.next(
-            new HttpRequest<ArrayBuffer>(
-              'GET',
-              this.getRangedDataURL(
-                taskId,
-                loadedBytes,
-                this.MAX_INSPECTION_DATA_DOWNLOAD_CHUNK_SIZE,
-              ),
-              null,
-              { responseType: 'arraybuffer' },
-            ),
-          );
-          reporter(loadedBytes);
-        },
-        complete: () => {
-          responseSubject.next(
-            new Blob(receivedBuffers, { type: 'application/octet-stream' }),
-          );
-          responseSubject.complete();
-        },
-      });
-
-    // request the initial chunk
-    partialRequestsSubject.next(
-      new HttpRequest<ArrayBuffer>(
-        'GET',
-        this.getRangedDataURL(
-          taskId,
-          0,
-          this.MAX_INSPECTION_DATA_DOWNLOAD_CHUNK_SIZE,
-        ),
-        null,
-        { responseType: 'arraybuffer' },
-      ),
-    );
-
-    return responseSubject;
+    const url = `${this.baseUrl}/api/v2/inspection/tasks/${taskId}/data`;
+    return this.http.head(url, { observe: 'response' }).pipe(
+      map((response) => {
+        const contentLength = Number(response.headers.get('Content-Length'));
+        if (isNaN(contentLength)) {
+          throw new Error(`Failed to parse Content-Length header: ${contentLength}`);
+        } else {
+          // contentLength should be a number >= 0
+          return contentLength;
+        }
+      }),
+      switchMap((totalSize) => {
+        const chunks = Math.ceil(totalSize / this.MAX_INSPECTION_DATA_DOWNLOAD_CHUNK_SIZE);
+        return range(0, chunks).pipe(
+          map((index) => {
+            const startInBytes = index * this.MAX_INSPECTION_DATA_DOWNLOAD_CHUNK_SIZE;
+            const maxSizeInBytes = Math.min(this.MAX_INSPECTION_DATA_DOWNLOAD_CHUNK_SIZE, totalSize - startInBytes);
+            const urlWithParams = `${url}?${this.buildRangeQueryParameters(startInBytes, maxSizeInBytes)}`;
+            return { index, maxSizeInBytes, urlWithParams };
+          }),
+          mergeMap(({ index, maxSizeInBytes, urlWithParams }) => {
+            return this.http.get(`${urlWithParams}`, { responseType: 'blob' }).pipe(
+              map((blob) => {
+                reporter(maxSizeInBytes);
+                return { index, blob };
+              })
+            );
+          }, this.DATA_DOWNLOAD_CONCURRENCY),
+          reduce((acc: Blob[], downloadResult: { index: number, blob: Blob }) => {
+            acc[downloadResult.index] = downloadResult.blob;
+            return acc;
+          }, []),
+          map((blobs) => {
+            const result = new Blob(blobs);
+            if (result.size != totalSize) {
+              // The downloaded file is very likely broken if the inspection API works well.
+              throw new Error(`Downloaded size: ${result.size} != Content-Length: ${totalSize}`);
+            }
+            return result;
+          })
+        )
+      })
+    )
   }
 
-  private getRangedDataURL(
-    taskId: string,
+  private buildRangeQueryParameters(
     startInBytes: number,
     maxSizeInBytes: number,
   ): string {
-    const url = this.baseUrl + `/api/v2/inspection/tasks/${taskId}/data`;
-    return url + `?start=${startInBytes}&maxSize=${maxSizeInBytes}`;
+    return `start=${startInBytes}&maxSize=${maxSizeInBytes}`;
   }
 
   public getPopup(): Observable<PopupFormRequest | null> {
