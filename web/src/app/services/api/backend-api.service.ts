@@ -180,6 +180,8 @@ export class BackendAPIImpl implements BackendAPI {
     inspectionID: string,
     reporter: DownloadProgressReporter,
   ) {
+    // accumulator holds donwnloaded bytes for reporter
+    let done = 0;
     return this.getInspectionMetadata(inspectionID).pipe(
       switchMap((metadata) => {
         const totalSize = metadata.header.fileSize ?? 0;
@@ -203,7 +205,8 @@ export class BackendAPIImpl implements BackendAPI {
               .get(`${url}?${params}`, { responseType: 'blob' })
               .pipe(
                 map((blob) => {
-                  reporter(totalSize, blob.size);
+                  done += blob.size;
+                  reporter(totalSize, done);
                   return { index, blob };
                 }),
               );
@@ -364,17 +367,13 @@ export class BackendAPIUtil {
   ) {
     progress.show();
     return api
-      .getInspectionData(
-        inspectionID,
-        ((acc) => (fileSize, done) => {
-          acc += done;
-          progress.updateProgress({
-            message: `Downloading inspection data (${ProgressUtil.formatPogressMessageByBytes(acc, fileSize)})`,
-            percent: (acc / fileSize) * 100,
-            mode: 'determinate',
-          });
-        })(0),
-      )
+      .getInspectionData(inspectionID, (fileSize, done) => {
+        progress.updateProgress({
+          message: `Downloading inspection data (${ProgressUtil.formatPogressMessageByBytes(done, fileSize)})`,
+          percent: (done / fileSize) * 100,
+          mode: 'determinate',
+        });
+      })
       .pipe(
         map(({ fileName, content }) => {
           const link = document.createElement('a');

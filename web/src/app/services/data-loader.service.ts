@@ -402,20 +402,16 @@ export class InspectionDataLoaderService {
     });
     try {
       const data = await lastValueFrom(
-        this.backendService.getInspectionData(
-          inspectionID,
-          ((acc) => (allSize, done) => {
-            acc += done;
-            this.progress.updateProgress({
-              message: `Downloading inspection data...(${ProgressUtil.formatPogressMessageByBytes(
-                acc,
-                allSize,
-              )})`,
-              percent: (acc / allSize) * 100,
-              mode: 'determinate',
-            });
-          })(0),
-        ),
+        this.backendService.getInspectionData(inspectionID, (allSize, done) => {
+          this.progress.updateProgress({
+            message: `Downloading inspection data...(${ProgressUtil.formatPogressMessageByBytes(
+              done,
+              allSize,
+            )})`,
+            percent: (done / allSize) * 100,
+            mode: 'determinate',
+          });
+        }),
       );
       this.progress.dismiss();
       this.loadInspectionDataDirect(await data.content.arrayBuffer());
