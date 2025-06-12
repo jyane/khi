@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@import "sass:color";
+@use "sass:color";
 
-@import '@angular/material' as mat;
+@use '@angular/material' as mat;
 
 $FONT_SIZE: 12px;
-$LABEL_BACKGROUND: m2-get-color-from-palette($m2-indigo-palette, 600);
-$BACKGROUND: m2-get-color-from-palette($m2-indigo-palette, 100);
+$LABEL_BACKGROUND: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 600);
+$BACKGROUND: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 100);
 $LABEL_COLOR: white;
 $VALUE_COLOR: black;
 
@@ -67,7 +67,7 @@ $VALUE_COLOR: black;
   background-color: $BACKGROUND;
 
   &:hover {
-    background-color: adjust($BACKGROUND, $lightness: -5%);
+    background-color: color.adjust($BACKGROUND, $lightness: -5%);
     text-decoration: underline;
     cursor: pointer;
   }
@@ -77,7 +77,7 @@ $VALUE_COLOR: black;
     width: 15px;
     height: 100%;
     margin: 0.5px 3px 0.5px 0;
-    background-color: adjust($BACKGROUND, $lightness: -10%);
+    background-color: color.adjust($BACKGROUND, $lightness: -10%);
     color: white;
     text-align: center;
     padding: 0 3px;
@@ -85,7 +85,7 @@ $VALUE_COLOR: black;
 
   &.current {
     .index {
-      background-color: m2-get-color-from-palette($m2-indigo-palette, 400);
+      background-color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 400);
     }
   }
 }

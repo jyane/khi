@@ -51,7 +51,7 @@ import { HeaderComponent } from 'src/app/header/header.component';
 
 @Component({
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.sass'],
+  styleUrls: ['./main.component.scss'],
   imports: [
     CommonModule,
     HeaderComponent,

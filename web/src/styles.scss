@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@import '@angular/material' as mat;
+@use '@angular/material' as mat;
 
-@import "@angular/cdk/overlay-prebuilt.css";
-@import "ngx-diff/styles/default-theme";
+@use "@angular/cdk/overlay-prebuilt.css";
+@use "ngx-diff/styles/default-theme";
 
 html, body, p, h1, h2, h3 {
   margin: 0;

@@ -45,7 +45,7 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'khi-header-set-input',
   templateUrl: './set-input.component.html',
-  styleUrls: ['./set-input.component.sass'],
+  styleUrls: ['./set-input.component.scss'],
   imports: [
     CommonModule,
     MatFormFieldModule,

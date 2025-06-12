@@ -28,7 +28,7 @@ export interface ReferenceViewModel {
   standalone: true,
   imports: [CommonModule, MatIconModule, MatTooltipModule],
   templateUrl: './common-reference-list.component.html',
-  styleUrl: './common-reference-list.component.sass',
+  styleUrl: './common-reference-list.component.scss',
 })
 export class CommonReferenceListComponent {
   @Input()

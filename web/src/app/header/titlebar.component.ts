@@ -28,7 +28,7 @@ import { BACKEND_API } from '../services/api/backend-api-interface';
 @Component({
   selector: 'khi-title',
   templateUrl: './titlebar.component.html',
-  styleUrls: ['./titlebar.component.sass'],
+  styleUrls: ['./titlebar.component.scss'],
   imports: [
     CommonModule,
     MatIconModule,

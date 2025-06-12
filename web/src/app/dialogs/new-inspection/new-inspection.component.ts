@@ -101,7 +101,7 @@ export function openNewInspectionDialog(dialog: MatDialog) {
 
 @Component({
   templateUrl: './new-inspection.component.html',
-  styleUrls: ['./new-inspection.component.sass'],
+  styleUrls: ['./new-inspection.component.scss'],
   imports: [
     CommonModule,
     KHICommonModule,

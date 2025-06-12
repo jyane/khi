@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-@import "sass:color";
+@use "sass:color";
 
-@import '@angular/material' as mat;
+@use '@angular/material' as mat;
 
-$verified-icon-color: m2-get-color-from-palette($m2-indigo-palette, 400);
-$error-icon-color: m2-get-color-from-palette($m2-red-palette, 400);
-$dirty-icon-color: m2-get-color-from-palette($m2-gray-palette, 400);
+$verified-icon-color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 400);
+$error-icon-color: mat.m2-get-color-from-palette(mat.$m2-red-palette, 400);
+$dirty-icon-color: mat.m2-get-color-from-palette(mat.$m2-gray-palette, 400);
 
 $dirty-icon-size: 15px;
 

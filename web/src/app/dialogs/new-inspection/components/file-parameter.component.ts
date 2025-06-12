@@ -44,7 +44,7 @@ import { interval, Subject, takeUntil, takeWhile } from 'rxjs';
 @Component({
   selector: 'khi-new-inspection-file-parameter',
   templateUrl: './file-parameter.component.html',
-  styleUrls: ['./file-parameter.component.sass'],
+  styleUrls: ['./file-parameter.component.scss'],
 
   imports: [
     CommonModule,

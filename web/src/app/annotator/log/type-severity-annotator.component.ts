@@ -24,7 +24,7 @@ import { LogEntry } from 'src/app/store/log';
 @Component({
   standalone: true,
   templateUrl: './type-severity-annotator.component.html',
-  styleUrls: ['./type-severity-annotator.component.sass'],
+  styleUrls: ['./type-severity-annotator.component.scss'],
   imports: [CommonModule, MatIconModule],
 })
 export class TypeSeverityAnnotatorComponent {

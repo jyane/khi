@@ -22,7 +22,7 @@ import { GraphPageDataSource } from 'src/app/services/frame-connection/frames/gr
 @Component({
   selector: 'graph-architecture-graph',
   templateUrl: './architecture-graph.component.html',
-  styleUrls: ['./architecture-graph.component.sass'],
+  styleUrls: ['./architecture-graph.component.scss'],
 })
 export class ArchitectureGraphComponent implements AfterViewInit {
   constructor(

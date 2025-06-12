@@ -36,7 +36,7 @@ interface NavigatorLayer {
  */
 @Component({
   templateUrl: './navigator.component.html',
-  styleUrl: './navigator.component.sass',
+  styleUrl: './navigator.component.scss',
   selector: 'khi-timeline-navigator',
   imports: [CommonModule, MatIconModule],
 })

@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-@import '../common' as common;
+@use '../common' as common;
 
-@import '@angular/material' as mat;
+@use '@angular/material' as mat;
 
-@import '../generated' as gen;
+@use '../generated' as gen;
 
-$TOOLBAR_BACKGROUND: m2-get-color-from-palette($m2-indigo-palette, 100);
+$TOOLBAR_BACKGROUND: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 100);
 
 $principal-user: #E53935;
 
@@ -157,7 +157,7 @@ mat-toolbar {
   padding: 0 7px;
   border-radius: 2px;
 
-  @include verb-type-colors-for-all;
+  @include gen.verb-type-colors-for-all;
 }
 
 .diff {
@@ -243,7 +243,7 @@ mat-toolbar {
 
 .empty-message {
   font-weight: 600;
-  color: m2-get-color-from-palette($m2-gray-palette, 700);
+  color: mat.m2-get-color-from-palette(mat.$m2-gray-palette, 700);
   text-align: center;
   margin: 20px;
 }

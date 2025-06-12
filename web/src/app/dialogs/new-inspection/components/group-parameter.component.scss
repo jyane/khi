@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-@import "sass:color";
+@use "sass:color";
 
-@import '@angular/material' as mat;
+@use '@angular/material' as mat;
 
-$separator-color: m2-get-color-from-palette($m2-gray-palette, 100);
+$separator-color: mat.m2-get-color-from-palette(mat.$m2-gray-palette, 100);
 
 .container {
   .header {

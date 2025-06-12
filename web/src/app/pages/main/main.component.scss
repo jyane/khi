@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-@import "sass:color";
-@import "../../common";
+@use "sass:color";
+@use "../../common";
 
-@import '@angular/material' as mat;
+@use '@angular/material' as mat;
 
-$SIDEBAR_BACKGROUND: m2-get-color-from-palette($m2-indigo-palette, 100);
-$BUTTON_BACKGROUND_ACTIVE: m2-get-color-from-palette($m2-indigo-palette, 600);
-$BUTTON_BACKGROUND_INACTIVE: m2-get-color-from-palette($m2-indigo-palette, 200);
+$SIDEBAR_BACKGROUND: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 100);
+$BUTTON_BACKGROUND_ACTIVE: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 600);
+$BUTTON_BACKGROUND_INACTIVE: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 200);
 $BUTTON_COLOR_ACTIVE: white;
 $BUTTON_COLOR_INACTIVE: black;
 
@@ -58,7 +58,7 @@ $BUTTON_COLOR_INACTIVE: black;
   color: $BUTTON_COLOR_INACTIVE;
 
   &:hover {
-    background-color: adjust($BUTTON_BACKGROUND_INACTIVE, $lightness: -10%);
+    background-color: color.adjust($BUTTON_BACKGROUND_INACTIVE, $lightness: -10%);
   }
 
   &.active {
@@ -66,7 +66,7 @@ $BUTTON_COLOR_INACTIVE: black;
     color: $BUTTON_COLOR_ACTIVE;
 
     &:hover {
-      background-color: adjust($BUTTON_BACKGROUND_ACTIVE, $lightness: 10%);
+      background-color: color.adjust($BUTTON_BACKGROUND_ACTIVE, $lightness: 10%);
     }
   }
 }

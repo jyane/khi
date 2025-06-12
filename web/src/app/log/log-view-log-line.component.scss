@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@import '../generated' as gen;
+@use '../generated' as gen;
 
 tr {
   width: 100%;
@@ -55,7 +55,7 @@ tr {
     max-width: 5px;
     width: 5px;
 
-    @include log-type-shape-colors-for-all;
+    @include gen.log-type-shape-colors-for-all;
   }
 
   .severity-indicator-wrap {
@@ -64,7 +64,7 @@ tr {
       color: white;
       text-align: center;
 
-      @include log-severity-colors-for-all;
+      @include gen.log-severity-colors-for-all;
     }
 
     .unknown {

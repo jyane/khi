@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@import "sass:color";
+@use "sass:color";
 
-@import '../sass' as common;
+@use '../common.scss' as common;
 
 .container {
   background: white;
@@ -70,7 +70,7 @@ mat-form-field {
     color: green;
 
     &:hover {
-      color: adjust(green, $lightness: -10%);
+      color: color.adjust(green, $lightness: -10%);
     }
   }
 
@@ -78,7 +78,7 @@ mat-form-field {
     color: red;
 
     &:hover {
-      color: adjust(red, $lightness: -10%);
+      color: color.adjust(red, $lightness: -10%);
     }
   }
 }
@@ -96,5 +96,5 @@ mat-form-field {
 .chip-grid {
   max-height: 400px;
 
-  @include show-vertical-scrollbar-always;
+  @include common.show-vertical-scrollbar-always;
 }
