@@ -14,23 +14,29 @@
  * limitations under the License.
  */
 
-@use '@angular/material' as mat
+@import '@angular/material' as mat;
 
-$ICON_SIZE : 18px
-$FONT_SIZE: 12px
-$BACKGROUND: mat.m2-get-color-from-palette(mat.$yellow-palette,100)
-$LABEL_COLOR: mat.m2-get-color-from-palette(mat.$yellow-palette,800)
-.container
-    display: flex
-    column-gap: 3px
-    align-items: center
-    background-color: $BACKGROUND
-    color: $LABEL_COLOR
-    line-height: 1.7
-    .icon
-        width: $FONT_SIZE
-        height: $FONT_SIZE
-        font-size: $FONT_SIZE
-    .message
-        font-size: $FONT_SIZE
-        margin: 0
+$ICON_SIZE: 18px;
+$FONT_SIZE: 12px;
+$BACKGROUND: m2-get-color-from-palette($yellow-palette, 100);
+$LABEL_COLOR: m2-get-color-from-palette($yellow-palette, 800);
+
+.container {
+  display: flex;
+  column-gap: 3px;
+  align-items: center;
+  background-color: $BACKGROUND;
+  color: $LABEL_COLOR;
+  line-height: 1.7;
+
+  .icon {
+    width: $FONT_SIZE;
+    height: $FONT_SIZE;
+    font-size: $FONT_SIZE;
+  }
+
+  .message {
+    font-size: $FONT_SIZE;
+    margin: 0;
+  }
+}

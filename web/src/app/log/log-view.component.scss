@@ -13,77 +13,105 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@use "sass:color"
-@use '../common' as common
-@use '@angular/material' as mat
-@use '../color-palette.sass' as cp
-.log-toolbar
-    display: flex
-    box-shadow: 1px 1px 1px black
-    .spacer
-        flex: 1
-        margin: 0
-        text-align: center
-        line-height: 25px
-        white-space: nowrap
-        overflow: hidden
-        text-overflow: ellipsis
-    .timeline-filter-wrapper
-        box-sizing: border-box
-        border-right: 0.5px solid mat.m2-get-color-from-palette(cp.$khi-menu-palette,"darker")
-.log-type-filter-button
-    grid-column: 3
-.count-indicator
-    background-color: #3f51b5
-    border-radius: 10px
-    padding: 3px 5px
-    margin: 0 0 0 10px
-    color: white
-    font-size: smaller
-    .divisor
-        padding: 0 3px
+@import "sass:color";
 
-.container
-    height: 100%
-    width: 100%
-    display: flex
-    flex-direction: column
-    overflow: hidden
+@import '../common' as common;
 
-.virtual-viewport
-    height: 100%
-    overflow-x: hidden
-    // Force showing scrollbar
-    &::-webkit-scrollbar 
-        -webkit-appearance: none
-        width: 7px
-    &::-webkit-scrollbar-thumb 
-        border-radius: 4px
-        background-color: #3f51b5
-        box-shadow: 0 0 1px rgba(255,255,255,.5)
-.log-list-container
-    height: 100%
-    flex: 1
-    overflow-y: scroll
-    overflow-x: hidden
-    position: relative
-    border-collapse: collapse
-    table-layout: fixed
-    width: 100%
+@import '@angular/material' as mat;
 
-.log-body-container
-    padding: 0
-    margin: 0
-    border-bottom: 2px solid rgba(0,0,0,0.3)
-    overflow-y: scroll
+@import '../color-palette.sass' as cp;
 
-.resizer
-    height: 5px
-    background-color: gray
-    &:hover
-        cursor: row-resize
-        background-color: color.adjust(lightgray,$lightness: -10% )
+.log-toolbar {
+  display: flex;
+  box-shadow: 1px 1px 1px black;
 
-khi-log-body
-    height: var(--log-body-view-height)
-    width: 100%
+  .spacer {
+    flex: 1;
+    margin: 0;
+    text-align: center;
+    line-height: 25px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .timeline-filter-wrapper {
+    box-sizing: border-box;
+    border-right: 0.5px solid m2-get-color-from-palette($khi-menu-palette, "darker");
+  }
+}
+
+.log-type-filter-button {
+  grid-column: 3;
+}
+
+.count-indicator {
+  background-color: #3f51b5;
+  border-radius: 10px;
+  padding: 3px 5px;
+  margin: 0 0 0 10px;
+  color: white;
+  font-size: smaller;
+
+  .divisor {
+    padding: 0 3px;
+  }
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.virtual-viewport {
+  height: 100%;
+  overflow-x: hidden;
+
+  // Force showing scrollbar
+  &::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: #3f51b5;
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+  }
+}
+
+.log-list-container {
+  height: 100%;
+  flex: 1;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  position: relative;
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.log-body-container {
+  padding: 0;
+  margin: 0;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+  overflow-y: scroll;
+}
+
+.resizer {
+  height: 5px;
+  background-color: gray;
+
+  &:hover {
+    cursor: row-resize;
+    background-color: adjust(lightgray, $lightness: -10%);
+  }
+}
+
+khi-log-body {
+  height: var(--log-body-view-height);
+  width: 100%;
+}

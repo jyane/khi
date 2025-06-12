@@ -14,45 +14,58 @@
  * limitations under the License.
  */
 
-@use '@angular/material' as mat
+@import '@angular/material' as mat;
 
-$ICON_SIZE : 18px
-$FONT_SIZE: 12px
-$LABEL_WIDTH: 100px
-$LABEL_BACKGROUND: mat.m2-get-color-from-palette(mat.$m2-indigo-palette,600)
-$BACKGROUND: mat.m2-get-color-from-palette(mat.$m2-indigo-palette,100)
-$LABEL_COLOR: white
-$VALUE_COLOR: black
-.container
-    background-color: $BACKGROUND
-    color: $LABEL_COLOR
-    line-height: 1.7
-    .icon
-        width: $FONT_SIZE
-        height: $FONT_SIZE
-        font-size: $FONT_SIZE
-    .label
-        user-select: none
-        font-weight: 600
-        font-size: $FONT_SIZE
-        margin: 0.5px 0 0.5px 0
-        width: $LABEL_WIDTH
-        background-color: $LABEL_BACKGROUND
-        .icon
-            margin: 3px 3px -3px 1px
-        
-    .link
-        color: $VALUE_COLOR
-        font-size: $FONT_SIZE
-        flex: 1
-        margin: 0
-        margin-left: 10px
-        line-height: 1.7
-        white-space: nowrap
-        text-overflow: ellipsis
-        overflow: hidden
-        &:hover
-            text-decoration: underline
-            cursor: pointer
-            .copy-icon-container
-                display: inline-block
+$ICON_SIZE: 18px;
+$FONT_SIZE: 12px;
+$LABEL_WIDTH: 100px;
+$LABEL_BACKGROUND: m2-get-color-from-palette($m2-indigo-palette, 600);
+$BACKGROUND: m2-get-color-from-palette($m2-indigo-palette, 100);
+$LABEL_COLOR: white;
+$VALUE_COLOR: black;
+
+.container {
+  background-color: $BACKGROUND;
+  color: $LABEL_COLOR;
+  line-height: 1.7;
+
+  .icon {
+    width: $FONT_SIZE;
+    height: $FONT_SIZE;
+    font-size: $FONT_SIZE;
+  }
+
+  .label {
+    user-select: none;
+    font-weight: 600;
+    font-size: $FONT_SIZE;
+    margin: 0.5px 0 0.5px 0;
+    width: $LABEL_WIDTH;
+    background-color: $LABEL_BACKGROUND;
+
+    .icon {
+      margin: 3px 3px -3px 1px;
+    }
+  }
+
+  .link {
+    color: $VALUE_COLOR;
+    font-size: $FONT_SIZE;
+    flex: 1;
+    margin: 0;
+    margin-left: 10px;
+    line-height: 1.7;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+
+      .copy-icon-container {
+        display: inline-block;
+      }
+    }
+  }
+}

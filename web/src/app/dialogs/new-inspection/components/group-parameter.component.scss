@@ -14,32 +14,46 @@
  * limitations under the License.
  */
 
-@use "sass:color"
-@use '@angular/material' as mat
+@import "sass:color";
 
-$separator-color:  mat.m2-get-color-from-palette(mat.$m2-gray-palette,100)
+@import '@angular/material' as mat;
 
-.container
-    .header
-        display: grid
-        grid-template-areas: "expander header"
-        grid-template-columns: auto 1fr
-        .expander
-            display: none
-    .children
-        padding: 0px 0px 0px 10px
-        overflow: hidden
-    &.collapsable
-        .header
-            .expander
-                display: block
-            &:hover
-                background-color: lightgray
-                cursor: pointer
-    
-.separator
-    height: 4px
-    width: 20px
-    border-radius: 2px
-    background-color: $separator-color
-    margin: 5px auto
+$separator-color: m2-get-color-from-palette($m2-gray-palette, 100);
+
+.container {
+  .header {
+    display: grid;
+    grid-template-areas: "expander header";
+    grid-template-columns: auto 1fr;
+
+    .expander {
+      display: none;
+    }
+  }
+
+  .children {
+    padding: 0px 0px 0px 10px;
+    overflow: hidden;
+  }
+
+  &.collapsable {
+    .header {
+      .expander {
+        display: block;
+      }
+
+      &:hover {
+        background-color: lightgray;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.separator {
+  height: 4px;
+  width: 20px;
+  border-radius: 2px;
+  background-color: $separator-color;
+  margin: 5px auto;
+}

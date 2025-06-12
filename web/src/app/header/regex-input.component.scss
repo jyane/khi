@@ -13,20 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@use "sass:color"
-.container
-    z-index: 10000
-    :host::ng-deep
-        .mat-mdc-form-field-error
-            backdrop-filter: blur(3px)
-            background-color: rgba(0,0,0,0.8)
-            border-radius: 10px
-            padding: 10px
-            font-size: small
-            color: color.adjust(red,$lightness: 30%)
+@import "sass:color";
 
-        .mat-mdc-form-field-subscript-wrapper
-            height: 0
-            z-index: 1000
-    mat-label
-        font-size: small
+.container {
+  z-index: 10000;
+
+  dummy-selector {
+    .mat-mdc-form-field-error {
+      backdrop-filter: blur(3px);
+      background-color: rgba(0, 0, 0, 0.8);
+      border-radius: 10px;
+      padding: 10px;
+      font-size: small;
+      color: adjust(red, $lightness: 30%);
+    }
+
+    .mat-mdc-form-field-subscript-wrapper {
+      height: 0;
+      z-index: 1000;
+    }
+  }
+
+  mat-label {
+    font-size: small;
+  }
+}

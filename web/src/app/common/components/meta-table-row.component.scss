@@ -14,40 +14,55 @@
  * limitations under the License.
  */
 
-.row
-    display: grid
-    grid-template-columns: auto auto auto auto auto 1fr
-    grid-template-areas: 'icon key colon value copy-button space'
-.icon
-    grid-area: icon
+.row {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto 1fr;
+  grid-template-areas: "icon key colon value copy-button space";
+}
+
+.icon {
+  grid-area: icon;
+}
 
 // Resize mat-icon and fit in a line
-.line-icon
-    width: 18px
-    height: 18px
-    font-size: 16px
-    line-height: 18px
-.key
-    grid-area: key
-    font-weight: 600
-.colon
-    grid-area: colon
-    margin: 0px 3px
-.value
-    grid-area: value
-    overflow: hidden
-    user-select: none
-    .value-inner
-        margin: 0px
-        white-space: nowrap
-        text-overflow: ellipsis
-        overflow: hidden
+.line-icon {
+  width: 18px;
+  height: 18px;
+  font-size: 16px;
+  line-height: 18px;
+}
 
-.copy-button
-    grid-area: copy-button
-    appearance: none
-    border: none
-    border-radius: 4px
-    &:hover
-        background-color: rgba(0,0,0,0.1)
-        cursor: pointer
+.key {
+  grid-area: key;
+  font-weight: 600;
+}
+
+.colon {
+  grid-area: colon;
+  margin: 0px 3px;
+}
+
+.value {
+  grid-area: value;
+  overflow: hidden;
+  user-select: none;
+
+  .value-inner {
+    margin: 0px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}
+
+.copy-button {
+  grid-area: copy-button;
+  appearance: none;
+  border: none;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+}

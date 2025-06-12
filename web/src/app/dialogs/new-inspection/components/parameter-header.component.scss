@@ -14,39 +14,47 @@
  * limitations under the License.
  */
 
-@use "sass:color"
-@use '@angular/material' as mat
+@import "sass:color";
 
-$verified-icon-color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette,400)
-$error-icon-color: mat.m2-get-color-from-palette(mat.$m2-red-palette,400)
-$dirty-icon-color: mat.m2-get-color-from-palette(mat.$m2-gray-palette, 400)
+@import '@angular/material' as mat;
 
-$dirty-icon-size: 15px
+$verified-icon-color: m2-get-color-from-palette($m2-indigo-palette, 400);
+$error-icon-color: m2-get-color-from-palette($m2-red-palette, 400);
+$dirty-icon-color: m2-get-color-from-palette($m2-gray-palette, 400);
 
-.label-row
-    display: grid
-    grid-template-areas: "validation title dirty"
-    gap: 3px
-    justify-content: start
-    align-items: center
+$dirty-icon-size: 15px;
 
-    .dirty
-        color: $dirty-icon-color
-        width: $dirty-icon-size
-        height: $dirty-icon-size
-        font-size: $dirty-icon-size
-    
-.label
-    flex: 1
-    font-weight: 600
-    margin: 0px
+.label-row {
+  display: grid;
+  grid-template-areas: "validation title dirty";
+  gap: 3px;
+  justify-content: start;
+  align-items: center;
 
-.verified
-    color: $verified-icon-color
-.error
-    color: $error-icon-color
+  .dirty {
+    color: $dirty-icon-color;
+    width: $dirty-icon-size;
+    height: $dirty-icon-size;
+    font-size: $dirty-icon-size;
+  }
+}
 
-.description
-    margin: 0px 0px 2px 20px
-    font-size: 12px
-    line-height: 16px
+.label {
+  flex: 1;
+  font-weight: 600;
+  margin: 0px;
+}
+
+.verified {
+  color: $verified-icon-color;
+}
+
+.error {
+  color: $error-icon-color;
+}
+
+.description {
+  margin: 0px 0px 2px 20px;
+  font-size: 12px;
+  line-height: 16px;
+}

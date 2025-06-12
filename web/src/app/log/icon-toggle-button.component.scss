@@ -14,41 +14,56 @@
  * limitations under the License.
  */
 
-@use "sass:color"
-@use '@angular/material' as mat
-@use '../color-palette.sass' as cp
+@import "sass:color";
 
-$size:25px
+@import '@angular/material' as mat;
 
-$normal-background: mat.m2-get-color-from-palette(cp.$khi-selectable-button-palette,'lighter')
-$normal-text: mat.m2-get-color-from-palette(cp.$khi-selectable-button-palette,'lighter-contrast')
-$selected-background: mat.m2-get-color-from-palette(cp.$khi-selectable-button-palette,'darker')
-$selected-text: mat.m2-get-color-from-palette(cp.$khi-selectable-button-palette,'darker-contrast')
-$disabled-background: mat.m2-get-color-from-palette(cp.$khi-disabled-palette,'darker')
-$disabled-text: mat.m2-get-color-from-palette(cp.$khi-disabled-palette,'darker-contrast')
+@import '../color-palette.sass' as cp;
 
-:host
-    height: $size
-.container
-    all: unset
-    display: block
-    width: $size
-    height: $size
-    &:hover
-        cursor: pointer
-        background-color: color.adjust($normal-background,$lightness: -5%)
-    background-color: $normal-background
-    color: $normal-text
-    &.selected
-        background-color: $selected-background
-        color: $selected-text
-        &:hover
-            background-color: color.adjust($selected-background,$lightness: 5%)
-    &.disabled
-        background-color: $disabled-background
-        color: $disabled-text
-        &:hover
-            cursor: default
-            background-color: $disabled-background
-            color: $disabled-text
+$size: 25px;
 
+$normal-background: m2-get-color-from-palette($khi-selectable-button-palette, "lighter");
+$normal-text: m2-get-color-from-palette($khi-selectable-button-palette, "lighter-contrast");
+$selected-background: m2-get-color-from-palette($khi-selectable-button-palette, "darker");
+$selected-text: m2-get-color-from-palette($khi-selectable-button-palette, "darker-contrast");
+$disabled-background: m2-get-color-from-palette($khi-disabled-palette, "darker");
+$disabled-text: m2-get-color-from-palette($khi-disabled-palette, "darker-contrast");
+
+host: {
+  height: $size;
+};
+
+.container {
+  all: unset;
+  display: block;
+  width: $size;
+  height: $size;
+
+  &:hover {
+    cursor: pointer;
+    background-color: adjust($normal-background, $lightness: -5%);
+  }
+
+  background-color: $normal-background;
+  color: $normal-text;
+
+  &.selected {
+    background-color: $selected-background;
+    color: $selected-text;
+
+    &:hover {
+      background-color: adjust($selected-background, $lightness: 5%);
+    }
+  }
+
+  &.disabled {
+    background-color: $disabled-background;
+    color: $disabled-text;
+
+    &:hover {
+      cursor: default;
+      background-color: $disabled-background;
+      color: $disabled-text;
+    }
+  }
+}

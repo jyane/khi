@@ -14,55 +14,75 @@
  * limitations under the License.
  */
 
-@use '../../generated' as gen
-@use '@angular/material' as mat
+@import '../../generated' as gen;
 
-$FONT_SIZE: 12px
-$LABEL_BACKGROUND: mat.m2-get-color-from-palette(mat.$m2-indigo-palette,600)
-$BACKGROUND: mat.m2-get-color-from-palette(mat.$m2-indigo-palette,100)
-$LABEL_COLOR: white
-$LABEL_WIDTH: 100px
-mat-icon
-    width: $FONT_SIZE
-    height: $FONT_SIZE
-    font-size: $FONT_SIZE
-    margin: 3px 3px -3px 1px
-.container
-    color: $LABEL_COLOR
-    background-color: $BACKGROUND
-    display: flex
-    flex-wrap: wrap
-    column-gap: 10px
-    .label
-        display: inline-block
-        width: $LABEL_WIDTH
-        white-space: nowrap
-        font-weight: bold
-        margin-right: 10px
-        font-size: $FONT_SIZE
-        background-color: $LABEL_BACKGROUND
-    .value
-        text-align: center
-    p
-        margin: 0
-        white-space: nowrap
-        overflow: hidden
-        text-overflow: ellipsis
-        min-width: 200px
-.log-type
-    flex: 1
-    .value
-        @include gen.log-type-shape-colors-for-all
-        color: white
-        padding: 0px 8px
-        border-radius: 8px
-        font-size: $FONT_SIZE
+@import '@angular/material' as mat;
 
-.log-severity
-    flex: 1
-    .value
-        @include gen.log-severity-colors-for-all
-        color: white
-        padding: 0px 8px
-        border-radius: 8px
-        font-size: $FONT_SIZE
+$FONT_SIZE: 12px;
+$LABEL_BACKGROUND: m2-get-color-from-palette($m2-indigo-palette, 600);
+$BACKGROUND: m2-get-color-from-palette($m2-indigo-palette, 100);
+$LABEL_COLOR: white;
+$LABEL_WIDTH: 100px;
+
+mat-icon {
+  width: $FONT_SIZE;
+  height: $FONT_SIZE;
+  font-size: $FONT_SIZE;
+  margin: 3px 3px -3px 1px;
+}
+
+.container {
+  color: $LABEL_COLOR;
+  background-color: $BACKGROUND;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 10px;
+
+  .label {
+    display: inline-block;
+    width: $LABEL_WIDTH;
+    white-space: nowrap;
+    font-weight: bold;
+    margin-right: 10px;
+    font-size: $FONT_SIZE;
+    background-color: $LABEL_BACKGROUND;
+  }
+
+  .value {
+    text-align: center;
+  }
+
+  p {
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 200px;
+  }
+}
+
+.log-type {
+  flex: 1;
+
+  .value {
+    @include log-type-shape-colors-for-all;
+
+    color: white;
+    padding: 0px 8px;
+    border-radius: 8px;
+    font-size: $FONT_SIZE;
+  }
+}
+
+.log-severity {
+  flex: 1;
+
+  .value {
+    @include log-severity-colors-for-all;
+
+    color: white;
+    padding: 0px 8px;
+    border-radius: 8px;
+    font-size: $FONT_SIZE;
+  }
+}
