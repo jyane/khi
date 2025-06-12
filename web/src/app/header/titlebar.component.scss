@@ -14,91 +14,111 @@
  * limitations under the License.
  */
 
-@use '@angular/material' as mat
+@import '@angular/material' as mat;
 
-$foreground: white
-$background: mat.m2-get-color-from-palette(mat.$m2-indigo-palette,500)
+$foreground: white;
+$background: m2-get-color-from-palette($m2-indigo-palette, 500);
 
-$menu-width: 135px
+$menu-width: 135px;
 
-:host
-    background-color: $background
-    display: flex
-    user-select: none
+host: {
+  background-color: $background;
+  display: flex;
+  user-select: none;
+};
 
-.title
-    margin: 0 0 0 20px
-    color: $foreground
-    font-size: 14px
-    font-weight: 600
+.title {
+  margin: 0 0 0 20px;
+  color: $foreground;
+  font-size: 14px;
+  font-weight: 600;
+}
 
-.version
-    color: $foreground
-    border: 1.5px solid $foreground
-    box-sizing: border-box
-    margin: auto 10px
-    padding: 3px 5px
-    border-radius: 4px
+.version {
+  color: $foreground;
+  border: 1.5px solid $foreground;
+  box-sizing: border-box;
+  margin: auto 10px;
+  padding: 3px 5px;
+  border-radius: 4px;
+}
 
-.viewer-mode
-    display: flex
-    justify-content: center
-    align-items: center
-    background-color: mat.m2-get-color-from-palette(mat.$m2-yellow-palette,900)
-    color: $foreground
-    border-radius: 4px
-    margin: auto 10px
-    padding: 3px 5px
-    .icon
-        margin: 0 5px 0 0
+.viewer-mode {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: m2-get-color-from-palette($m2-yellow-palette, 900);
+  color: $foreground;
+  border-radius: 4px;
+  margin: auto 10px;
+  padding: 3px 5px;
 
-.page-info
-    display: flex
-    justify-content: center
-    align-items: center
-    background-color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette,100)
-    color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette,800)
-    border-radius: 4px
-    margin: auto 10px
-    padding: 3px 5px
-    .icon
-        margin: 0 5px 0 0
+  .icon {
+    margin: 0 5px 0 0;
+  }
+}
 
-.session-info
-    display: flex
-    justify-content: center
-    align-items: center
-    background-color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette,100)
-    color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette,800)
-    border-radius: 4px
-    margin: auto 10px
-    padding: 3px 5px
-    .session-info-label
-        display: flex
-        justify-content: center
-        align-items: center
-        margin: 0
-        color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette,800)
-    .icon
-        margin: 0 5px 0 0
-    .session-count
-        background-color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette,800)
-        color: white
-        border-radius: 8px
-        padding: 0 4px
-        margin: 0 0 0 10px
+.page-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: m2-get-color-from-palette($m2-indigo-palette, 100);
+  color: m2-get-color-from-palette($m2-indigo-palette, 800);
+  border-radius: 4px;
+  margin: auto 10px;
+  padding: 3px 5px;
 
+  .icon {
+    margin: 0 5px 0 0;
+  }
+}
 
-.mat-menu-group.mdc-button
-    color: $foreground
-    background-color: $background
-    &:hover
-        background-color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette,400)
+.session-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: m2-get-color-from-palette($m2-indigo-palette, 100);
+  color: m2-get-color-from-palette($m2-indigo-palette, 800);
+  border-radius: 4px;
+  margin: auto 10px;
+  padding: 3px 5px;
 
-.menu-groups
-    flex: 1
-    margin: 0 20px
+  .session-info-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    color: m2-get-color-from-palette($m2-indigo-palette, 800);
+  }
 
-.connection-error
-    color: mat.m2-get-color-from-palette(mat.$red-palette,400)
-    font-weight: 800
+  .icon {
+    margin: 0 5px 0 0;
+  }
+
+  .session-count {
+    background-color: m2-get-color-from-palette($m2-indigo-palette, 800);
+    color: white;
+    border-radius: 8px;
+    padding: 0 4px;
+    margin: 0 0 0 10px;
+  }
+}
+
+.mat-menu-group.mdc-button {
+  color: $foreground;
+  background-color: $background;
+
+  &:hover {
+    background-color: m2-get-color-from-palette($m2-indigo-palette, 400);
+  }
+}
+
+.menu-groups {
+  flex: 1;
+  margin: 0 20px;
+}
+
+.connection-error {
+  color: m2-get-color-from-palette($red-palette, 400);
+  font-weight: 800;
+}

@@ -13,53 +13,88 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@use "sass:color"
-@use '../common.sass' as common
-.container
-    background: white
-    width: 600px
-    padding: 20px
-    box-shadow: 1px 1px 3px 3px rgba(0,0,0,0.3)
-mat-form-field
-    width: 600px
-.buttons
-    display: grid
-    grid-template-areas: "add remove - close"
-    grid-template-columns: auto auto 1fr auto
-    gap: 20px
-    .add-all-button
-        grid: add
-    .remove-all-button
-        grid: remove
-    .close-button
-        grid: close
-    mat-icon
-        margin: 0 5px 0 -5px
-    button
-        display: block
-        margin: 0 0 0 auto
+@import "sass:color";
 
-.chip-button-icon
-    width: inherit
-    height: inherit
-    font-size: inherit
-    fill: gray
-    &:hover
-        cursor: pointer
-    &.only
-        color: green
-        &:hover
-            color: color.adjust(green,$lightness: -10%)
-    &.remove
-        color: red
-        &:hover
-            color: color.adjust(red,$lightness: -10%)
-.chip-button
-    &.only
-        padding-right: 4px !important
-    &.remove
-        padding-left: 4px !important
+@import '../sass' as common;
 
-.chip-grid
-    max-height: 400px
-    @include common.show-vertical-scrollbar-always()
+.container {
+  background: white;
+  width: 600px;
+  padding: 20px;
+  box-shadow: 1px 1px 3px 3px rgba(0, 0, 0, 0.3);
+}
+
+mat-form-field {
+  width: 600px;
+}
+
+.buttons {
+  display: grid;
+  grid-template-areas: "add remove - close";
+  grid-template-columns: auto auto 1fr auto;
+  gap: 20px;
+
+  .add-all-button {
+    grid: add;
+  }
+
+  .remove-all-button {
+    grid: remove;
+  }
+
+  .close-button {
+    grid: close;
+  }
+
+  mat-icon {
+    margin: 0 5px 0 -5px;
+  }
+
+  button {
+    display: block;
+    margin: 0 0 0 auto;
+  }
+}
+
+.chip-button-icon {
+  width: inherit;
+  height: inherit;
+  font-size: inherit;
+  fill: gray;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.only {
+    color: green;
+
+    &:hover {
+      color: adjust(green, $lightness: -10%);
+    }
+  }
+
+  &.remove {
+    color: red;
+
+    &:hover {
+      color: adjust(red, $lightness: -10%);
+    }
+  }
+}
+
+.chip-button {
+  &.only {
+    padding-right: 4px !important;
+  }
+
+  &.remove {
+    padding-left: 4px !important;
+  }
+}
+
+.chip-grid {
+  max-height: 400px;
+
+  @include show-vertical-scrollbar-always;
+}

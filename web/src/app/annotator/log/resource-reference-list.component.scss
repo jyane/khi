@@ -13,59 +13,79 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@use "sass:color"
-@use '@angular/material' as mat
+@import "sass:color";
 
-$FONT_SIZE: 12px
-$LABEL_BACKGROUND: mat.m2-get-color-from-palette(mat.$m2-indigo-palette,600)
-$BACKGROUND: mat.m2-get-color-from-palette(mat.$m2-indigo-palette,100)
-$LABEL_COLOR: white
-$VALUE_COLOR: black
-.label
-    margin: 0
-    font-size: $FONT_SIZE
-    font-weight: 600
-    background-color: $LABEL_BACKGROUND
-    color: $LABEL_COLOR
-    white-space: nowrap
-    text-overflow: ellipsis
-    mat-icon
-        margin-right: 3px
-        width: $FONT_SIZE
-        height: $FONT_SIZE
-        font-size: $FONT_SIZE
-.path-container
-    max-height: 100px
-    overflow-y: scroll
-    // Force showing scrollbar
-    &::-webkit-scrollbar 
-        -webkit-appearance: none
-        width: 7px
-    &::-webkit-scrollbar-thumb 
-        border-radius: 4px
-        background-color: #3f51b5
-        box-shadow: 0 0 1px rgba(255,255,255,.5)
-.path
-    color: $VALUE_COLOR
-    font-size: $FONT_SIZE
-    margin: 0
-    white-space: nowrap
-    overflow: hidden
-    text-overflow: ellipsis
-    background-color: $BACKGROUND
-    &:hover
-        background-color: color.adjust($BACKGROUND,$lightness: -5%)
-        text-decoration: underline
-        cursor: pointer
-    .index
-        display: inline-block
-        width: 15px
-        height: 100%
-        margin: 0.5px 3px 0.5px 0
-        background-color: color.adjust($BACKGROUND,$lightness: -10%)
-        color: white
-        text-align: center
-        padding: 0 3px
-    &.current
-        .index
-            background-color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette,400)
+@import '@angular/material' as mat;
+
+$FONT_SIZE: 12px;
+$LABEL_BACKGROUND: m2-get-color-from-palette($m2-indigo-palette, 600);
+$BACKGROUND: m2-get-color-from-palette($m2-indigo-palette, 100);
+$LABEL_COLOR: white;
+$VALUE_COLOR: black;
+
+.label {
+  margin: 0;
+  font-size: $FONT_SIZE;
+  font-weight: 600;
+  background-color: $LABEL_BACKGROUND;
+  color: $LABEL_COLOR;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  mat-icon {
+    margin-right: 3px;
+    width: $FONT_SIZE;
+    height: $FONT_SIZE;
+    font-size: $FONT_SIZE;
+  }
+}
+
+.path-container {
+  max-height: 100px;
+  overflow-y: scroll;
+
+  // Force showing scrollbar
+  &::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: #3f51b5;
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+  }
+}
+
+.path {
+  color: $VALUE_COLOR;
+  font-size: $FONT_SIZE;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background-color: $BACKGROUND;
+
+  &:hover {
+    background-color: adjust($BACKGROUND, $lightness: -5%);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .index {
+    display: inline-block;
+    width: 15px;
+    height: 100%;
+    margin: 0.5px 3px 0.5px 0;
+    background-color: adjust($BACKGROUND, $lightness: -10%);
+    color: white;
+    text-align: center;
+    padding: 0 3px;
+  }
+
+  &.current {
+    .index {
+      background-color: m2-get-color-from-palette($m2-indigo-palette, 400);
+    }
+  }
+}

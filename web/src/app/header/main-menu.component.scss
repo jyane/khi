@@ -14,18 +14,22 @@
  * limitations under the License.
  */
 
-@use '@angular/material' as mat
+@import '@angular/material' as mat;
 
-:host
-    display: flex
-    gap: 1px
+host: {
+  display: flex;
+  gap: 1px;
+};
 
-.menu-group
-    display: flex
-    justify-content: center
-    align-items: center
-    width: 140px
-    &.mat-menu-group
-        color: white
-        background-color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette,400)
-        font-size: 20px
+.menu-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 140px;
+
+  &.mat-menu-group {
+    color: white;
+    background-color: m2-get-color-from-palette($m2-indigo-palette, 400);
+    font-size: 20px;
+  }
+}

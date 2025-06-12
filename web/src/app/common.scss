@@ -14,20 +14,26 @@
  * limitations under the License.
  */
 
-$resizer-thickness: 5px
-    
-@mixin adjust-mat-icon-size($size)
-    width: $size
-    height: $size
-    font-size: $size
-    line-height: $size
+$resizer-thickness: 5px;
 
-@mixin show-vertical-scrollbar-always()
-    overflow-y: scroll
-    &::-webkit-scrollbar 
-        -webkit-appearance: none
-        width: 7px
-    &::-webkit-scrollbar-thumb 
-        border-radius: 4px
-        background-color: #3f51b5
-        box-shadow: 0 0 1px rgba(255,255,255,.5)
+@mixin adjust-mat-icon-size($size) {
+  width: $size;
+  height: $size;
+  font-size: $size;
+  line-height: $size;
+}
+
+@mixin show-vertical-scrollbar-always {
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: #3f51b5;
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+  }
+}

@@ -14,30 +14,36 @@
  * limitations under the License.
  */
 
-@use '@angular/material' as mat
+@import '@angular/material' as mat;
 
-$BUTTON_SIZE : 25px
-$ICON_SIZE_DIFF : 8px
-$BUTTON_COLOR: mat.m2-get-color-from-palette(mat.$m2-indigo-palette,600)
-$BUTTON_HOVER_COLOR: mat.m2-get-color-from-palette(mat.$m2-indigo-palette,500)
-$ICON_COLOR: mat.m2-get-color-from-palette(mat.$m2-indigo-palette,100)
-.button
-    height: 25px
-    appearance: none
-    border: none
-    width: $BUTTON_SIZE
-    height: $BUTTON_SIZE
-    display: flex
-    justify-content: center
-    align-items: center
-    mat-icon
-        width: $BUTTON_SIZE - $ICON_SIZE_DIFF
-        height: $BUTTON_SIZE - $ICON_SIZE_DIFF
-        font-size: $BUTTON_SIZE - $ICON_SIZE_DIFF
-    color: $ICON_COLOR
-    padding: 0px
-    background-color: $BUTTON_COLOR
-    &:hover
-        background-color: $BUTTON_HOVER_COLOR
-        cursor: pointer
-    
+$BUTTON_SIZE: 25px;
+$ICON_SIZE_DIFF: 8px;
+$BUTTON_COLOR: m2-get-color-from-palette($m2-indigo-palette, 600);
+$BUTTON_HOVER_COLOR: m2-get-color-from-palette($m2-indigo-palette, 500);
+$ICON_COLOR: m2-get-color-from-palette($m2-indigo-palette, 100);
+
+.button {
+  height: 25px;
+  appearance: none;
+  border: none;
+  width: $BUTTON_SIZE;
+  height: $BUTTON_SIZE;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  mat-icon {
+    width: $BUTTON_SIZE - $ICON_SIZE_DIFF;
+    height: $BUTTON_SIZE - $ICON_SIZE_DIFF;
+    font-size: $BUTTON_SIZE - $ICON_SIZE_DIFF;
+  }
+
+  color: $ICON_COLOR;
+  padding: 0px;
+  background-color: $BUTTON_COLOR;
+
+  &:hover {
+    background-color: $BUTTON_HOVER_COLOR;
+    cursor: pointer;
+  }
+}

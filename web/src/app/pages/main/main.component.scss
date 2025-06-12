@@ -14,43 +14,59 @@
  * limitations under the License.
  */
 
-@use "sass:color"
-@use "../../common"
-@use '@angular/material' as mat
+@import "sass:color";
+@import "../../common";
 
-$SIDEBAR_BACKGROUND:  mat.m2-get-color-from-palette(mat.$m2-indigo-palette,100)
-$BUTTON_BACKGROUND_ACTIVE:  mat.m2-get-color-from-palette(mat.$m2-indigo-palette,600)
-$BUTTON_BACKGROUND_INACTIVE:  mat.m2-get-color-from-palette(mat.$m2-indigo-palette,200)
-$BUTTON_COLOR_ACTIVE: white
-$BUTTON_COLOR_INACTIVE: black
+@import '@angular/material' as mat;
 
-.wrapper
-    display: grid
-    grid-template-rows: auto minmax(0,1fr)
-    height: 100%
-    overflow: hidden
-.main-view-wrapper
-    display: flex
-.timeline
-    flex: 1
-.sidebar
-    grid-area: sidebar
-    display: flex
-    row-gap: 1px
-    flex-direction: column
-    justify-content: flex-end
-    background-color: $SIDEBAR_BACKGROUND
-    box-shadow:  -1px 0 5px 0 rgba(0, 0, 0, 0.35)
-.pane-toggle
-    appearance: none
-    border: none
-    padding: none
-    background-color: $BUTTON_BACKGROUND_INACTIVE
-    color: $BUTTON_COLOR_INACTIVE
-    &:hover
-        background-color: color.adjust($BUTTON_BACKGROUND_INACTIVE,$lightness: -10%)
-    &.active
-        background-color: $BUTTON_BACKGROUND_ACTIVE
-        color: $BUTTON_COLOR_ACTIVE
-        &:hover
-            background-color: color.adjust($BUTTON_BACKGROUND_ACTIVE,$lightness: 10%)
+$SIDEBAR_BACKGROUND: m2-get-color-from-palette($m2-indigo-palette, 100);
+$BUTTON_BACKGROUND_ACTIVE: m2-get-color-from-palette($m2-indigo-palette, 600);
+$BUTTON_BACKGROUND_INACTIVE: m2-get-color-from-palette($m2-indigo-palette, 200);
+$BUTTON_COLOR_ACTIVE: white;
+$BUTTON_COLOR_INACTIVE: black;
+
+.wrapper {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100%;
+  overflow: hidden;
+}
+
+.main-view-wrapper {
+  display: flex;
+}
+
+.timeline {
+  flex: 1;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  display: flex;
+  row-gap: 1px;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-color: $SIDEBAR_BACKGROUND;
+  box-shadow: (-1px) 0 5px 0 rgba(0, 0, 0, 0.35);
+}
+
+.pane-toggle {
+  appearance: none;
+  border: none;
+  padding: none;
+  background-color: $BUTTON_BACKGROUND_INACTIVE;
+  color: $BUTTON_COLOR_INACTIVE;
+
+  &:hover {
+    background-color: adjust($BUTTON_BACKGROUND_INACTIVE, $lightness: -10%);
+  }
+
+  &.active {
+    background-color: $BUTTON_BACKGROUND_ACTIVE;
+    color: $BUTTON_COLOR_ACTIVE;
+
+    &:hover {
+      background-color: adjust($BUTTON_BACKGROUND_ACTIVE, $lightness: 10%);
+    }
+  }
+}

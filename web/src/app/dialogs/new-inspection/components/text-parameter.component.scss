@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-mat-form-field
-    width: 100%
-    box-sizing: border-box
-    padding: 0px 10px 0px 20px
+mat-form-field {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0px 10px 0px 20px;
+}
 
-.hint
-    margin: -20px 10px 0px 20px
+.hint {
+  margin: (-20px) 10px 0px 20px;
+}

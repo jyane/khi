@@ -14,38 +14,48 @@
  * limitations under the License.
  */
 
-@use '@angular/material' as mat
+@import '@angular/material' as mat;
 
-$OUTER_MARGIN: 4px
-$BASE_COLOR: mat.m2-get-color-from-palette(mat.$m2-gray-palette,800)
-$LABEL_COLOR: white
-$DEFAULT_OPACITY: 0.95
+$OUTER_MARGIN: 4px;
+$BASE_COLOR: m2-get-color-from-palette($m2-gray-palette, 800);
+$LABEL_COLOR: white;
+$DEFAULT_OPACITY: 0.95;
 
-$LAYER_ICON_SIZE: 14px
-.container
-    pointer-events: all
-    position: absolute
-    bottom: $OUTER_MARGIN
-    right: $OUTER_MARGIN
-    min-width: 300px
-    opacity: $DEFAULT_OPACITY
-    background-color: $BASE_COLOR
-    color: $LABEL_COLOR
-    border: 1px solid $BASE_COLOR
-    &:hover
-        opacity: 1
+$LAYER_ICON_SIZE: 14px;
 
-.layer-title
-    display: flex
-    padding: 0px 5px
-    column-gap: 5px
-    align-items: center
-    .layer-icon
-        width: $LAYER_ICON_SIZE
-        height: $LAYER_ICON_SIZE
-        font-size: $LAYER_ICON_SIZE
-    .layer-label
-        margin: 0px
+.container {
+  pointer-events: all;
+  position: absolute;
+  bottom: $OUTER_MARGIN;
+  right: $OUTER_MARGIN;
+  min-width: 300px;
+  opacity: $DEFAULT_OPACITY;
+  background-color: $BASE_COLOR;
+  color: $LABEL_COLOR;
+  border: 1px solid $BASE_COLOR;
 
-.layer-bottom
-    border-bottom: 1px solid black
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.layer-title {
+  display: flex;
+  padding: 0px 5px;
+  column-gap: 5px;
+  align-items: center;
+
+  .layer-icon {
+    width: $LAYER_ICON_SIZE;
+    height: $LAYER_ICON_SIZE;
+    font-size: $LAYER_ICON_SIZE;
+  }
+
+  .layer-label {
+    margin: 0px;
+  }
+}
+
+.layer-bottom {
+  border-bottom: 1px solid black;
+}
