@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-@import '@angular/material' as mat;
+@use '@angular/material' as mat;
 
-host: {
+:host {
   display: flex;
   gap: 1px;
 };
@@ -29,7 +29,7 @@ host: {
 
   &.mat-menu-group {
     color: white;
-    background-color: m2-get-color-from-palette($m2-indigo-palette, 400);
+    background-color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 400);
     font-size: 20px;
   }
 }

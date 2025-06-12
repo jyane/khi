@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-@import '@angular/material' as mat;
+@use '@angular/material' as mat;
 
-$TOOLBAR_BACKGROUND: m2-get-color-from-palette($m2-indigo-palette, 100);
+$TOOLBAR_BACKGROUND: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 100);
 
 .diff {
   flex: 1;
@@ -75,12 +75,12 @@ $TOOLBAR_BACKGROUND: m2-get-color-from-palette($m2-indigo-palette, 100);
 
 .empty-message {
   font-weight: 600;
-  color: m2-get-color-from-palette($m2-gray-palette, 700);
+  color: mat.m2-get-color-from-palette(mat.$m2-gray-palette, 700);
   text-align: center;
   margin: 20px;
 }
 
-host: {
+:host {
   display: flex;
   flex-direction: column;
   overflow: hidden;

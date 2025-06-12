@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-@import '@angular/material' as mat;
+@use '@angular/material' as mat;
 
 $ICON_SIZE: 18px;
 $FONT_SIZE: 12px;
-$BACKGROUND: m2-get-color-from-palette($yellow-palette, 100);
-$LABEL_COLOR: m2-get-color-from-palette($yellow-palette, 800);
+$BACKGROUND: mat.m2-get-color-from-palette(mat.$yellow-palette, 100);
+$LABEL_COLOR: mat.m2-get-color-from-palette(mat.$yellow-palette, 800);
 
 .container {
   display: flex;

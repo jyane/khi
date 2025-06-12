@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@import "sass:color";
+@use "sass:color";
 
 .background {
   pointer-events: all;
@@ -136,7 +136,7 @@
           color: white;
 
           &:hover {
-            background-color: adjust(#3f51b5, $lightness: -5%);
+            background-color: color.adjust(#3f51b5, $lightness: -5%);
             cursor: default;
           }
 
@@ -197,7 +197,7 @@
 
         &:hover {
           cursor: pointer;
-          background-color: adjust(white, $lightness: -3%);
+          background-color: color.adjust(white, $lightness: -3%);
         }
       }
     }

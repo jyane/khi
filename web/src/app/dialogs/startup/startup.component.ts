@@ -81,7 +81,7 @@ export type TaskListViewModel = {
 @Component({
   selector: 'khi-startup',
   templateUrl: './startup.component.html',
-  styleUrls: ['./startup.component.sass'],
+  styleUrls: ['./startup.component.scss'],
   standalone: true,
   imports: [CommonModule, MatIconModule, MatTooltipModule, MatButtonModule],
 })

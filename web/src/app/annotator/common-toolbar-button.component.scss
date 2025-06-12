@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-@import '@angular/material' as mat;
+@use '@angular/material' as mat;
 
 $BUTTON_SIZE: 25px;
 $ICON_SIZE_DIFF: 8px;
-$BUTTON_COLOR: m2-get-color-from-palette($m2-indigo-palette, 600);
-$BUTTON_HOVER_COLOR: m2-get-color-from-palette($m2-indigo-palette, 500);
-$ICON_COLOR: m2-get-color-from-palette($m2-indigo-palette, 100);
+$BUTTON_COLOR: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 600);
+$BUTTON_HOVER_COLOR: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 500);
+$ICON_COLOR: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 100);
 
 .button {
   height: 25px;

@@ -42,7 +42,7 @@ import { ResourceTimeline } from '../store/timeline';
   standalone: true,
   imports: [CommonModule, MatIconModule, MatTooltipModule, ClipboardModule],
   templateUrl: './common-field-annotator.component.html',
-  styleUrl: './common-field-annotator.component.sass',
+  styleUrl: './common-field-annotator.component.scss',
 })
 export class CommonFieldAnnotatorComponent {
   private readonly clipboard = inject(Clipboard);

@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-@import '../generated' as gen;
+@use '../generated' as gen;
 
 $selected-timeline-ref-color: #1a237e;
 
-host: {
+:host {
   overflow: hidden;
 };
 
@@ -70,11 +70,11 @@ mat-icon {
 }
 
 .log-type {
-  @include log-type-shape-colors-for-all;
+  @include gen.log-type-shape-colors-for-all;
 }
 
 .severity-type {
-  @include log-severity-colors-for-all;
+  @include gen.log-severity-colors-for-all;
 }
 
 .copy-button {

@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-@import '@angular/material' as mat;
+@use '@angular/material' as mat;
 
 $ICON_SIZE: 18px;
 $FONT_SIZE: 12px;
 $LABEL_WIDTH: 100px;
-$LABEL_BACKGROUND: m2-get-color-from-palette($m2-indigo-palette, 600);
-$BACKGROUND: m2-get-color-from-palette($m2-indigo-palette, 100);
+$LABEL_BACKGROUND: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 600);
+$BACKGROUND: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 100);
 $LABEL_COLOR: white;
 $VALUE_COLOR: black;
 

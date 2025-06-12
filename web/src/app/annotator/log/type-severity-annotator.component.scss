@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-@import '../../generated' as gen;
+@use '../../generated' as gen;
 
-@import '@angular/material' as mat;
+@use '@angular/material' as mat;
 
 $FONT_SIZE: 12px;
-$LABEL_BACKGROUND: m2-get-color-from-palette($m2-indigo-palette, 600);
-$BACKGROUND: m2-get-color-from-palette($m2-indigo-palette, 100);
+$LABEL_BACKGROUND: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 600);
+$BACKGROUND: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 100);
 $LABEL_COLOR: white;
 $LABEL_WIDTH: 100px;
 
@@ -65,7 +65,7 @@ mat-icon {
   flex: 1;
 
   .value {
-    @include log-type-shape-colors-for-all;
+    @include gen.log-type-shape-colors-for-all;
 
     color: white;
     padding: 0px 8px;
@@ -78,7 +78,7 @@ mat-icon {
   flex: 1;
 
   .value {
-    @include log-severity-colors-for-all;
+    @include gen.log-severity-colors-for-all;
 
     color: white;
     padding: 0px 8px;

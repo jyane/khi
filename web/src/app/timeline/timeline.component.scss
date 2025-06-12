@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-@import "sass:color";
-@import "sass:map";
+@use "sass:color";
+@use "sass:map";
 
-@import '../generated' as gen;
+@use '../generated' as gen;
 
 $timeline-border-horizontal-color: rgba(0, 0, 0, 0.1);
 $layer-heights: ("kind": 25px, "namespace": 25px, "name": 30px, "subresource": 22px);
@@ -34,14 +34,14 @@ $timeruler-hover-background: rgba(63, 81, 181, 0.3);
 $timeruler-tip: rgba(0, 0, 0, 0.2);
 
 @mixin layer-header-style($layer-type) {
-  height: get($layer-heights, $layer-type);
+  height: map.get($layer-heights, $layer-type);
   position: relative;
   box-sizing: border-box;
   border-bottom: 0.5px solid rgba(0, 0, 0, 0.3);
   border-top: 0.5px solid rgba(0, 0, 0, 0.3);
 
   .relationship-label {
-    @include parent-relationship-label-styles;
+    @include gen.parent-relationship-label-styles;
 
     padding: 1px 3px;
     border-radius: 3px;
@@ -49,36 +49,36 @@ $timeruler-tip: rgba(0, 0, 0, 0.2);
   }
 
   &.selected p {
-    background-color: mix(get($layer-background, $layer-type), adjust($timeline-selection-tint-color, $lightness: -30%), 60%);
+    background-color: color.mix(map.get($layer-background, $layer-type), color.adjust($timeline-selection-tint-color, $lightness: -30%), 60%);
   }
 
   &.children-of-selected p {
-    background-color: mix(get($layer-background, $layer-type), $timeline-selection-tint-color, 60%);
+    background-color: color.mix(map.get($layer-background, $layer-type), $timeline-selection-tint-color, 60%);
   }
 
   &.highlight p {
-    background-color: mix(get($layer-background, $layer-type), $timeline-selection-tint-color, 40%);
+    background-color: color.mix(map.get($layer-background, $layer-type), $timeline-selection-tint-color, 40%);
   }
 
   &.selected {
-    border-bottom: 1px solid adjust($timeline-selection-tint-color, $lightness: -30%);
-    border-top: 1px solid adjust($timeline-selection-tint-color, $lightness: -30%);
-    border-left: 5px solid adjust($timeline-selection-tint-color, $lightness: -30%);
+    border-bottom: 1px solid color.adjust($timeline-selection-tint-color, $lightness: -30%);
+    border-top: 1px solid color.adjust($timeline-selection-tint-color, $lightness: -30%);
+    border-left: 5px solid color.adjust($timeline-selection-tint-color, $lightness: -30%);
   }
 
   p {
     margin: 0;
-    background-color: get($layer-background, $layer-type);
-    color: get($layer-label-color, $layer-type);
-    height: get($layer-heights, $layer-type);
-    line-height: get($layer-heights, $layer-type);
+    background-color: map.get($layer-background, $layer-type);
+    color: map.get($layer-label-color, $layer-type);
+    height: map.get($layer-heights, $layer-type);
+    line-height: map.get($layer-heights, $layer-type);
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    padding-left: get($layer-left-padding, $layer-type);
+    padding-left: map.get($layer-left-padding, $layer-type);
     user-select: none;
 
-    @if get($layer-label-bold, $layer-type) {
+    @if map.get($layer-label-bold, $layer-type) {
       font-weight: 800;
     }
   }
@@ -94,7 +94,7 @@ $timeruler-tip: rgba(0, 0, 0, 0.2);
 
 @mixin timeline-body-color($layer-type) {
   .timeline-body {
-    background-color: adjust(get($layer-background, $layer-type), $lightness: $timeline-body-background-color-tint);
+    background-color: color.adjust(map.get($layer-background, $layer-type), $lightness: $timeline-body-background-color-tint);
   }
 }
 
@@ -360,7 +360,7 @@ $layer-hover-tooltips: 4000;
       color: white;
 
       .logtype-inner {
-        @include log-type-shape-colors-for-all;
+        @include gen.log-type-shape-colors-for-all;
 
         border-radius: 3px;
         font-weight: 600;
@@ -372,7 +372,7 @@ $layer-hover-tooltips: 4000;
       color: white;
 
       .revisionstate-inner {
-        @include revisionstate-type-colors-for-all;
+        @include gen.revisionstate-type-colors-for-all;
 
         border-radius: 3px;
         font-weight: 600;
@@ -445,7 +445,7 @@ $layer-hover-tooltips: 4000;
   .hover-resource-relationship {
     font-size: smaller;
 
-    @include parent-relationship-label-styles;
+    @include gen.parent-relationship-label-styles;
 
     padding: 1px 3px;
     border-radius: 3px;

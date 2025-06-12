@@ -23,7 +23,7 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'khi-main-menu',
   templateUrl: './main-menu.component.html',
-  styleUrls: ['./main-menu.component.sass'],
+  styleUrls: ['./main-menu.component.scss'],
   imports: [MatIconModule, MatButtonModule],
 })
 export class MainMenuComponent {

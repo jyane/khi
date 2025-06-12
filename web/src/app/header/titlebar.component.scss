@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-@import '@angular/material' as mat;
+@use '@angular/material' as mat;
 
 $foreground: white;
-$background: m2-get-color-from-palette($m2-indigo-palette, 500);
+$background: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 500);
 
 $menu-width: 135px;
 
-host: {
+:host {
   background-color: $background;
   display: flex;
   user-select: none;
@@ -47,7 +47,7 @@ host: {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: m2-get-color-from-palette($m2-yellow-palette, 900);
+  background-color: mat.m2-get-color-from-palette(mat.$m2-yellow-palette, 900);
   color: $foreground;
   border-radius: 4px;
   margin: auto 10px;
@@ -62,8 +62,8 @@ host: {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: m2-get-color-from-palette($m2-indigo-palette, 100);
-  color: m2-get-color-from-palette($m2-indigo-palette, 800);
+  background-color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 100);
+  color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 800);
   border-radius: 4px;
   margin: auto 10px;
   padding: 3px 5px;
@@ -77,8 +77,8 @@ host: {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: m2-get-color-from-palette($m2-indigo-palette, 100);
-  color: m2-get-color-from-palette($m2-indigo-palette, 800);
+  background-color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 100);
+  color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 800);
   border-radius: 4px;
   margin: auto 10px;
   padding: 3px 5px;
@@ -88,7 +88,7 @@ host: {
     justify-content: center;
     align-items: center;
     margin: 0;
-    color: m2-get-color-from-palette($m2-indigo-palette, 800);
+    color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 800);
   }
 
   .icon {
@@ -96,7 +96,7 @@ host: {
   }
 
   .session-count {
-    background-color: m2-get-color-from-palette($m2-indigo-palette, 800);
+    background-color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 800);
     color: white;
     border-radius: 8px;
     padding: 0 4px;
@@ -109,7 +109,7 @@ host: {
   background-color: $background;
 
   &:hover {
-    background-color: m2-get-color-from-palette($m2-indigo-palette, 400);
+    background-color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 400);
   }
 }
 
@@ -119,6 +119,6 @@ host: {
 }
 
 .connection-error {
-  color: m2-get-color-from-palette($red-palette, 400);
+  color: mat.m2-get-color-from-palette(mat.$red-palette, 400);
   font-weight: 800;
 }

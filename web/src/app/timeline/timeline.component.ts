@@ -127,7 +127,7 @@ const DEFAULT_HOVER_VIEW_STATE: HoverViewState = {
 @Component({
   selector: 'khi-timeline',
   templateUrl: './timeline.component.html',
-  styleUrls: ['./timeline.component.sass'],
+  styleUrls: ['./timeline.component.scss'],
   providers: [
     CanvasKeyEventHandler,
     TimelinesScrollStrategy,

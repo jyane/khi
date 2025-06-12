@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-@import "sass:color";
+@use "sass:color";
 
-@import '@angular/material' as mat;
+@use '@angular/material' as mat;
 
-$background-error: m2-get-color-from-palette($m2-red-palette, 50);
-$border-error: m2-get-color-from-palette($m2-red-palette, 100);
-$icon-error: m2-get-color-from-palette($m2-red-palette, 400);
+$background-error: mat.m2-get-color-from-palette(mat.$m2-red-palette, 50);
+$border-error: mat.m2-get-color-from-palette(mat.$m2-red-palette, 100);
+$icon-error: mat.m2-get-color-from-palette(mat.$m2-red-palette, 400);
 
-$background-warning: m2-get-color-from-palette($m2-yellow-palette, 50);
-$border-warning: m2-get-color-from-palette($m2-yellow-palette, 300);
-$icon-warning: m2-get-color-from-palette($m2-yellow-palette, 700);
+$background-warning: mat.m2-get-color-from-palette(mat.$m2-yellow-palette, 50);
+$border-warning: mat.m2-get-color-from-palette(mat.$m2-yellow-palette, 300);
+$icon-warning: mat.m2-get-color-from-palette(mat.$m2-yellow-palette, 700);
 
-$background-info: m2-get-color-from-palette($m2-blue-palette, 50);
-$border-info: m2-get-color-from-palette($m2-blue-palette, 300);
-$icon-info: m2-get-color-from-palette($m2-blue-palette, 700);
+$background-info: mat.m2-get-color-from-palette(mat.$m2-blue-palette, 50);
+$border-info: mat.m2-get-color-from-palette(mat.$m2-blue-palette, 300);
+$icon-info: mat.m2-get-color-from-palette(mat.$m2-blue-palette, 700);
 
 .container {
   display: flex;
