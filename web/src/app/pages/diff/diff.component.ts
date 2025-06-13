@@ -28,7 +28,7 @@ import { ResourceTimeline } from 'src/app/store/timeline';
 @Component({
   selector: 'khi-diff-page',
   templateUrl: './diff.component.html',
-  styleUrls: ['./diff.component.sass'],
+  styleUrls: ['./diff.component.scss'],
   imports: [CommonModule, TitleBarComponent, SideBySideDiffComponent],
 })
 export class DiffComponent {

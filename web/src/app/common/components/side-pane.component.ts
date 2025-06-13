@@ -24,7 +24,7 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'khi-side-pane',
   templateUrl: './side-pane.component.html',
-  styleUrls: ['./side-pane.component.sass'],
+  styleUrls: ['./side-pane.component.scss'],
   imports: [CommonModule, MatToolbarModule, MatIconModule],
 })
 export class SidePaneComponent implements OnChanges {

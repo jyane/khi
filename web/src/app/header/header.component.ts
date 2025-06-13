@@ -22,7 +22,7 @@ import { ToolbarComponent } from './toolbar.component';
 @Component({
   selector: 'khi-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.sass'],
+  styleUrls: ['./header.component.scss'],
   imports: [TitleBarComponent, MainMenuComponent, ToolbarComponent],
 })
 export class HeaderComponent {}

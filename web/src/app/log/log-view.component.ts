@@ -66,7 +66,7 @@ interface LogViewSelectionMoveCommand {
 @Component({
   selector: 'khi-log-view',
   templateUrl: './log-view.component.html',
-  styleUrls: ['./log-view.component.sass'],
+  styleUrls: ['./log-view.component.scss'],
   imports: [
     CommonModule,
     ScrollingModule,

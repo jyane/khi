@@ -76,7 +76,7 @@ type DiffViewViewModel = {
 @Component({
   selector: 'khi-diff-view',
   templateUrl: './diff-view.component.html',
-  styleUrls: ['./diff-view.component.sass'],
+  styleUrls: ['./diff-view.component.scss'],
   imports: [
     CommonModule,
     ScrollingModule,

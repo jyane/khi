@@ -55,7 +55,7 @@ type ToolbarPopupStatus =
 @Component({
   selector: 'khi-header-toolbar',
   templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.sass'],
+  styleUrls: ['./toolbar.component.scss'],
   imports: [
     CommonModule,
     SetInputComponent,
