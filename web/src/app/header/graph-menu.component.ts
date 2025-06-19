@@ -23,7 +23,7 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'khi-graph-menu',
   templateUrl: './graph-menu.component.html',
-  styleUrls: ['./graph-menu.component.sass'],
+  styleUrls: ['./graph-menu.component.scss'],
   imports: [MatMenuModule, MatIconModule, MatButtonModule],
 })
 export class GraphMenuComponent {

@@ -31,7 +31,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 @Component({
   selector: 'khi-new-inspection-parameter-header',
   templateUrl: './parameter-header.component.html',
-  styleUrls: ['./parameter-header.component.sass'],
+  styleUrls: ['./parameter-header.component.scss'],
   imports: [CommonModule, BreaklinePipe, MatIconModule, MatTooltipModule],
 })
 export class ParameterHeaderComponent {

@@ -26,7 +26,7 @@ import { TimestampFormatPipe } from '../common/timestamp-format.pipe';
 @Component({
   selector: 'khi-log-view-log-line',
   templateUrl: './log-view-log-line.component.html',
-  styleUrls: ['./log-view-log-line.component.sass'],
+  styleUrls: ['./log-view-log-line.component.scss'],
   imports: [CommonModule, MatTooltipModule, TimestampFormatPipe],
 })
 export class LogViewLogLineComponent {

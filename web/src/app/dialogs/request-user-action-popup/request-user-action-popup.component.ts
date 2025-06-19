@@ -58,7 +58,7 @@ const nextButtonLabel: { [key: string]: string } = {
   selector: 'khi-request-user-action-popup',
   standalone: true,
   templateUrl: './request-user-action-popup.component.html',
-  styleUrls: ['./request-user-action-popup.component.sass'],
+  styleUrls: ['./request-user-action-popup.component.scss'],
   imports: [
     CommonModule,
     MatButtonModule,

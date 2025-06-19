@@ -23,7 +23,7 @@ import { AnnotationDecision } from './annotator';
 @Component({
   standalone: true,
   templateUrl: './common-toolbar-button.component.html',
-  styleUrl: './common-toolbar-button.component.sass',
+  styleUrl: './common-toolbar-button.component.scss',
   imports: [CommonModule, MatIconModule, MatTooltipModule],
 })
 export class CommonToolbarButtonComponent {

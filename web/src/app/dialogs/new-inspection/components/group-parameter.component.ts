@@ -40,7 +40,7 @@ import {
 @Component({
   selector: 'khi-new-inspection-group-parameter',
   templateUrl: './group-parameter.component.html',
-  styleUrls: ['./group-parameter.component.sass'],
+  styleUrls: ['./group-parameter.component.scss'],
   imports: [
     CommonModule,
     MatIconModule,
