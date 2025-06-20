@@ -15,7 +15,7 @@
  */
 @use "sass:color";
 
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
 $FONT_SIZE: 12px;
 $LABEL_BACKGROUND: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 600);
@@ -85,7 +85,10 @@ $VALUE_COLOR: black;
 
   &.current {
     .index {
-      background-color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 400);
+      background-color: mat.m2-get-color-from-palette(
+        mat.$m2-indigo-palette,
+        400
+      );
     }
   }
 }

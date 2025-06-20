@@ -22,7 +22,7 @@
   min-width: 1200px;
   min-height: 700px;
   overflow: hidden;
-  background-color: #F8F8F8;
+  background-color: #f8f8f8;
   box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.35);
   display: flex;
   z-index: 999;
@@ -38,7 +38,7 @@
     box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
   }
 
-  @media(max-width: 1200px) {
+  @media (max-width: 1200px) {
     min-width: 1000px;
   }
 }
@@ -120,7 +120,7 @@
         appearance: none;
         outline: none;
         border: none;
-        background-color: #FCFCFC;
+        background-color: #fcfcfc;
         padding: 4px 0px;
         box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.35);
         width: 300px;
@@ -337,7 +337,7 @@
 
       &.RUNNING {
         color: white;
-        background-color: #11AA55;
+        background-color: #11aa55;
       }
 
       &.CANCELLED {
@@ -347,7 +347,7 @@
 
       &.ERROR {
         color: white;
-        background-color: #FF5555;
+        background-color: #ff5555;
       }
     }
   }
@@ -420,7 +420,7 @@
       font-weight: 600;
 
       .error-link {
-        color: #FF5555;
+        color: #ff5555;
         display: flex;
         padding: 0px 10px;
         align-items: center;

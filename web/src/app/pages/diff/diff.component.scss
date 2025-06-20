@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
 $TOOLBAR_BACKGROUND: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 100);
 
@@ -85,4 +85,4 @@ $TOOLBAR_BACKGROUND: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 100);
   flex-direction: column;
   overflow: hidden;
   height: 100%;
-};
+}

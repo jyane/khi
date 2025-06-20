@@ -16,11 +16,17 @@
 
 @use "sass:color";
 
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
 $drop-area-color-inactive-base-color: lightgray;
-$drop-area-color-tint-background: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 50);
-$drop-area-color-tint-border: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 400);
+$drop-area-color-tint-background: mat.m2-get-color-from-palette(
+  mat.$m2-indigo-palette,
+  50
+);
+$drop-area-color-tint-border: mat.m2-get-color-from-palette(
+  mat.$m2-indigo-palette,
+  400
+);
 $done-label-color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 400);
 
 .container {
@@ -40,7 +46,8 @@ $done-label-color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 400);
   width: 100%;
   border: 3px dashed $drop-area-color-inactive-base-color;
 
-  &:hover, &.dragging {
+  &:hover,
+  &.dragging {
     cursor: pointer;
     border: 3px dashed $drop-area-color-tint-border;
     background-color: $drop-area-color-tint-background;

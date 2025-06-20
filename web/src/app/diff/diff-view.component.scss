@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-@use '../common' as common;
+@use "../common" as common;
 
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
-@use '../generated' as gen;
+@use "../generated" as gen;
 
 $TOOLBAR_BACKGROUND: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 100);
 
-$principal-user: #E53935;
+$principal-user: #e53935;
 
 .container {
   display: grid;

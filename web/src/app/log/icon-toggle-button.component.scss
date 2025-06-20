@@ -16,22 +16,40 @@
 
 @use "sass:color";
 
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
-@use '../color-palette.scss' as cp;
+@use "../color-palette.scss" as cp;
 
 $size: 25px;
 
-$normal-background: mat.m2-get-color-from-palette(cp.$khi-selectable-button-palette, "lighter");
-$normal-text: mat.m2-get-color-from-palette(cp.$khi-selectable-button-palette, "lighter-contrast");
-$selected-background: mat.m2-get-color-from-palette(cp.$khi-selectable-button-palette, "darker");
-$selected-text: mat.m2-get-color-from-palette(cp.$khi-selectable-button-palette, "darker-contrast");
-$disabled-background: mat.m2-get-color-from-palette(cp.$khi-disabled-palette, "darker");
-$disabled-text: mat.m2-get-color-from-palette(cp.$khi-disabled-palette, "darker-contrast");
+$normal-background: mat.m2-get-color-from-palette(
+  cp.$khi-selectable-button-palette,
+  "lighter"
+);
+$normal-text: mat.m2-get-color-from-palette(
+  cp.$khi-selectable-button-palette,
+  "lighter-contrast"
+);
+$selected-background: mat.m2-get-color-from-palette(
+  cp.$khi-selectable-button-palette,
+  "darker"
+);
+$selected-text: mat.m2-get-color-from-palette(
+  cp.$khi-selectable-button-palette,
+  "darker-contrast"
+);
+$disabled-background: mat.m2-get-color-from-palette(
+  cp.$khi-disabled-palette,
+  "darker"
+);
+$disabled-text: mat.m2-get-color-from-palette(
+  cp.$khi-disabled-palette,
+  "darker-contrast"
+);
 
 :host {
   height: $size;
-};
+}
 
 .container {
   all: unset;
