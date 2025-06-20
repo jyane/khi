@@ -16,7 +16,7 @@
 
 @use "sass:color";
 
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
 $background-error: mat.m2-get-color-from-palette(mat.$m2-red-palette, 50);
 $border-error: mat.m2-get-color-from-palette(mat.$m2-red-palette, 100);

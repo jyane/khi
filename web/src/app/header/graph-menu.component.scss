@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
 :host {
   display: flex;
   gap: 1px;
-};
+}
 
 .menu-group {
   display: flex;
@@ -29,7 +29,10 @@
 
   &.mat-menu-group {
     color: white;
-    background-color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 400);
+    background-color: mat.m2-get-color-from-palette(
+      mat.$m2-indigo-palette,
+      400
+    );
     font-size: 20px;
   }
 }

@@ -16,7 +16,7 @@
 
 @use "sass:color";
 
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
 $separator-color: mat.m2-get-color-from-palette(mat.$m2-gray-palette, 100);
 

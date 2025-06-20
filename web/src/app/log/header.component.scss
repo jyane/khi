@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-@use '../generated' as gen;
+@use "../generated" as gen;
 
 $selected-timeline-ref-color: #1a237e;
 
 :host {
   overflow: hidden;
-};
+}
 
 mat-icon {
   width: 18px;
@@ -30,7 +30,7 @@ mat-icon {
 }
 
 .container {
-  background: #F0F0F0;
+  background: #f0f0f0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 
   .type {

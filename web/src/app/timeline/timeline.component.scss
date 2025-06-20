@@ -17,16 +17,41 @@
 @use "sass:color";
 @use "sass:map";
 
-@use '../generated' as gen;
+@use "../generated" as gen;
 
 $timeline-border-horizontal-color: rgba(0, 0, 0, 0.1);
-$layer-heights: ("kind": 25px, "namespace": 25px, "name": 30px, "subresource": 22px);
-$layer-background: ("kind": rgba(63, 81, 181, 1), "namespace": rgba(100, 100, 100, 1), "name": rgba(200, 200, 200, 1), "subresource": white);
-$layer-label-color: ("kind": white, "namespace": white, "name": black, "subresource": black);
-$layer-left-padding: ("kind": 5px, "namespace": 5px, "name": 10px, "subresource": 10px);
-$layer-label-bold: ("kind": true, "namespace": true, "name": false, "subresource": false);
+$layer-heights: (
+  "kind": 25px,
+  "namespace": 25px,
+  "name": 30px,
+  "subresource": 22px,
+);
+$layer-background: (
+  "kind": rgba(63, 81, 181, 1),
+  "namespace": rgba(100, 100, 100, 1),
+  "name": rgba(200, 200, 200, 1),
+  "subresource": white,
+);
+$layer-label-color: (
+  "kind": white,
+  "namespace": white,
+  "name": black,
+  "subresource": black,
+);
+$layer-left-padding: (
+  "kind": 5px,
+  "namespace": 5px,
+  "name": 10px,
+  "subresource": 10px,
+);
+$layer-label-bold: (
+  "kind": true,
+  "namespace": true,
+  "name": false,
+  "subresource": false,
+);
 
-$timeline-selection-tint-color: #40BA8D;
+$timeline-selection-tint-color: #40ba8d;
 $timeline-body-background-color-tint: 0%;
 
 $timeruler-tip-hover: rgba(63, 81, 181, 1);
@@ -49,21 +74,36 @@ $timeruler-tip: rgba(0, 0, 0, 0.2);
   }
 
   &.selected p {
-    background-color: color.mix(map.get($layer-background, $layer-type), color.adjust($timeline-selection-tint-color, $lightness: -30%), 60%);
+    background-color: color.mix(
+      map.get($layer-background, $layer-type),
+      color.adjust($timeline-selection-tint-color, $lightness: -30%),
+      60%
+    );
   }
 
   &.children-of-selected p {
-    background-color: color.mix(map.get($layer-background, $layer-type), $timeline-selection-tint-color, 60%);
+    background-color: color.mix(
+      map.get($layer-background, $layer-type),
+      $timeline-selection-tint-color,
+      60%
+    );
   }
 
   &.highlight p {
-    background-color: color.mix(map.get($layer-background, $layer-type), $timeline-selection-tint-color, 40%);
+    background-color: color.mix(
+      map.get($layer-background, $layer-type),
+      $timeline-selection-tint-color,
+      40%
+    );
   }
 
   &.selected {
-    border-bottom: 1px solid color.adjust($timeline-selection-tint-color, $lightness: -30%);
-    border-top: 1px solid color.adjust($timeline-selection-tint-color, $lightness: -30%);
-    border-left: 5px solid color.adjust($timeline-selection-tint-color, $lightness: -30%);
+    border-bottom: 1px solid
+      color.adjust($timeline-selection-tint-color, $lightness: -30%);
+    border-top: 1px solid
+      color.adjust($timeline-selection-tint-color, $lightness: -30%);
+    border-left: 5px solid
+      color.adjust($timeline-selection-tint-color, $lightness: -30%);
   }
 
   p {
@@ -94,7 +134,10 @@ $timeruler-tip: rgba(0, 0, 0, 0.2);
 
 @mixin timeline-body-color($layer-type) {
   .timeline-body {
-    background-color: color.adjust(map.get($layer-background, $layer-type), $lightness: $timeline-body-background-color-tint);
+    background-color: color.adjust(
+      map.get($layer-background, $layer-type),
+      $lightness: $timeline-body-background-color-tint
+    );
   }
 }
 
@@ -135,8 +178,10 @@ $timeruler-highlight-border-thickness: 5px;
 .scaling-mode {
   .timeruler-view {
     background-color: $timeruler-hover-background;
-    border-left: $timeruler-highlight-border-thickness solid $timeruler-tip-hover;
-    border-right: $timeruler-highlight-border-thickness solid $timeruler-tip-hover;
+    border-left: $timeruler-highlight-border-thickness solid
+      $timeruler-tip-hover;
+    border-right: $timeruler-highlight-border-thickness solid
+      $timeruler-tip-hover;
     border-top: $timeruler-highlight-border-thickness solid $timeruler-tip-hover;
     cursor: col-resize;
 
@@ -167,8 +212,10 @@ $timeruler-highlight-border-thickness: 5px;
 
   &:hover {
     background-color: $timeruler-hover-background;
-    border-left: $timeruler-highlight-border-thickness solid $timeruler-tip-hover;
-    border-right: $timeruler-highlight-border-thickness solid $timeruler-tip-hover;
+    border-left: $timeruler-highlight-border-thickness solid
+      $timeruler-tip-hover;
+    border-right: $timeruler-highlight-border-thickness solid
+      $timeruler-tip-hover;
     border-top: $timeruler-highlight-border-thickness solid $timeruler-tip-hover;
     cursor: col-resize;
 
@@ -419,7 +466,8 @@ $layer-hover-tooltips: 4000;
   }
 }
 
-.log-detail-row, .log-detail-count {
+.log-detail-row,
+.log-detail-count {
   box-sizing: border-box;
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }

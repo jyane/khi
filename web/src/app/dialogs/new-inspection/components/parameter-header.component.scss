@@ -16,9 +16,12 @@
 
 @use "sass:color";
 
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
-$verified-icon-color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 400);
+$verified-icon-color: mat.m2-get-color-from-palette(
+  mat.$m2-indigo-palette,
+  400
+);
 $error-icon-color: mat.m2-get-color-from-palette(mat.$m2-red-palette, 400);
 $dirty-icon-color: mat.m2-get-color-from-palette(mat.$m2-gray-palette, 400);
 

@@ -15,11 +15,11 @@
  */
 @use "sass:color";
 
-@use '../common' as common;
+@use "../common" as common;
 
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
-@use '../color-palette.scss' as cp;
+@use "../color-palette.scss" as cp;
 
 .log-toolbar {
   display: flex;
@@ -37,7 +37,8 @@
 
   .timeline-filter-wrapper {
     box-sizing: border-box;
-    border-right: 0.5px solid mat.m2-get-color-from-palette(cp.$khi-menu-palette, "darker");
+    border-right: 0.5px solid
+      mat.m2-get-color-from-palette(cp.$khi-menu-palette, "darker");
   }
 }
 
