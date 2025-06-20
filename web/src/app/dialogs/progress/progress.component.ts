@@ -24,7 +24,7 @@ import {
 
 @Component({
   templateUrl: './progress.component.html',
-  styleUrls: ['./progress.component.sass'],
+  styleUrls: ['./progress.component.scss'],
   imports: [CommonModule, MatProgressBarModule],
 })
 export class ProgressDialogComponent {

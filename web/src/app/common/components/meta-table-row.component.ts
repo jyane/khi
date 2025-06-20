@@ -23,7 +23,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 @Component({
   selector: 'khi-meta-table-row',
   templateUrl: './meta-table-row.component.html',
-  styleUrls: ['./meta-table-row.component.sass'],
+  styleUrls: ['./meta-table-row.component.scss'],
   imports: [CommonModule, MatIconModule, MatTooltipModule, CdkCopyToClipboard],
 })
 export class MetaTableRowComponent {

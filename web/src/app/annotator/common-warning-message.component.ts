@@ -24,7 +24,7 @@ import { ResourceRevisionChangePair } from '../store/timeline';
   standalone: true,
   imports: [CommonModule, MatIconModule],
   templateUrl: './common-warning-message.component.html',
-  styleUrl: './common-warning-message.component.sass',
+  styleUrl: './common-warning-message.component.scss',
 })
 export class CommonWarningMessageComponent {
   @Input()

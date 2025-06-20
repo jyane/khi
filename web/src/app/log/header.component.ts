@@ -38,7 +38,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'khi-log-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.sass'],
+  styleUrls: ['./header.component.scss'],
   imports: [CommonModule],
 })
 export class LogHeaderComponent {

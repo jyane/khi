@@ -38,7 +38,7 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'khi-new-inspection-text-parameter',
   templateUrl: './text-parameter.component.html',
-  styleUrls: ['./text-parameter.component.sass'],
+  styleUrls: ['./text-parameter.component.scss'],
   imports: [
     CommonModule,
     ParameterHeaderComponent,

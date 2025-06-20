@@ -49,7 +49,7 @@ interface ResourceRefAnnotationViewModel {
 @Component({
   standalone: true,
   templateUrl: './resource-reference-list.component.html',
-  styleUrl: './resource-reference-list.component.sass',
+  styleUrl: './resource-reference-list.component.scss',
   imports: [CommonModule, MatIconModule],
 })
 export class ResourceReferenceListAnnotatorComponent {

@@ -29,7 +29,7 @@ import {
 @Component({
   selector: 'khi-new-inspection-parameter-hint',
   templateUrl: './parameter-hint.component.html',
-  styleUrls: ['./parameter-hint.component.sass'],
+  styleUrls: ['./parameter-hint.component.scss'],
   imports: [CommonModule, MatIconModule, BreaklinePipe],
 })
 export class ParameterHintComponent {

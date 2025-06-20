@@ -22,7 +22,7 @@ import { ArchitectureGraphComponent } from './architecture-graph/architecture-gr
 @Component({
   selector: 'graph-root',
   templateUrl: './graph.component.html',
-  styleUrls: ['./graph.component.sass'],
+  styleUrls: ['./graph.component.scss'],
   imports: [TitleBarComponent, GraphMenuComponent, ArchitectureGraphComponent],
 })
 export class GraphComponent {}

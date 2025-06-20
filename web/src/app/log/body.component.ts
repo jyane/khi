@@ -26,7 +26,7 @@ import { ResolveTextPipe } from '../common/resolve-text.pipe';
 @Component({
   selector: 'khi-log-body',
   templateUrl: './body.component.html',
-  styleUrls: ['./body.component.sass'],
+  styleUrls: ['./body.component.scss'],
   imports: [CommonModule, LogHeaderComponent, HighlightModule, ResolveTextPipe],
 })
 export class LogBodyComponent {
