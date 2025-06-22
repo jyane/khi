@@ -91,6 +91,9 @@ type DiffViewViewModel = {
   ],
 })
 export class DiffViewComponent implements OnInit, OnDestroy {
+  private readonly _inspectionDataStore = inject(InspectionDataStoreService);
+  private readonly _selectionManager = inject(SelectionManagerService);
+
   private readonly envInjector = inject(EnvironmentInjector);
 
   private readonly timelineAnnotatorResolver = inject(
@@ -106,11 +109,6 @@ export class DiffViewComponent implements OnInit, OnDestroy {
   );
 
   private destoroyed = new Subject<void>();
-
-  constructor(
-    private _inspectionDataStore: InspectionDataStoreService,
-    private _selectionManager: SelectionManagerService,
-  ) {}
 
   ngOnDestroy(): void {
     this.destoroyed.next();
