@@ -27,8 +27,8 @@ import (
 	"github.com/crazy3lf/colorconv"
 )
 
-const SASS_FILE_LOCATION = "./web/src/app/generated.sass"
-const SASS_TEMPLATE = "./scripts/frontend-codegen/templates/generated.sass.gtpl"
+const SCSS_FILE_LOCATION = "./web/src/app/generated.scss"
+const SCSS_TEMPLATE = "./scripts/frontend-codegen/templates/generated.scss.gtpl"
 
 const GENERATED_TS_FILE_LOCATION = "./web/src/app/generated.ts"
 const GENERATED_TS_TEMPLATE = "./scripts/frontend-codegen/templates/generated.ts.gtpl"
@@ -82,13 +82,13 @@ func main() {
 		input.RevisionStateDarkColors[revisonState.CSSSelector] = fmt.Sprintf("hsl(%fdeg %f%% %f%%)", h, s*100, dl*100)
 	}
 
-	sassTemplate := loadTemplate("color-sass", SASS_TEMPLATE)
-	var sassTemplateResult bytes.Buffer
-	err := sassTemplate.Execute(&sassTemplateResult, input)
+	scssTemplate := loadTemplate("color-scss", SCSS_TEMPLATE)
+	var scssTemplateResult bytes.Buffer
+	err := scssTemplate.Execute(&scssTemplateResult, input)
 	if err != nil {
 		panic(err)
 	}
-	mustWriteFile(SASS_FILE_LOCATION, sassTemplateResult.String())
+	mustWriteFile(SCSS_FILE_LOCATION, scssTemplateResult.String())
 
 	var legendTemplateResult bytes.Buffer
 	legendTemplate := loadTemplate("logtypes-ts", GENERATED_TS_TEMPLATE)
@@ -97,7 +97,6 @@ func main() {
 		panic(err)
 	}
 	mustWriteFile(GENERATED_TS_FILE_LOCATION, legendTemplateResult.String())
-
 }
 
 func loadTemplate(templateName string, templateLocation string) *template.Template {
