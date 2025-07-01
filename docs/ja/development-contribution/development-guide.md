@@ -58,7 +58,7 @@ make setup-hooks
                 "maxStructFields": -1
             },
         }
-    ], 
+    ],
 }
 ```
 
@@ -95,7 +95,7 @@ go test ./... -args -skip-cloud-logging=true
 
 下記のフロントエンドのコードは、バックエンドのコードから自動生成されます。
 
-* `/web/src/app/generated.sass`
+* `/web/src/app/generated.scss`
 * `/web/src/app/generated.ts`
 
 上記のファイルは [`scripts/frontend-codegen/main.go` Golang codes](/scripts/frontend-codegen/main.go)にて、Golang側の一部の定数からテンプレートをもとに生成されます。
