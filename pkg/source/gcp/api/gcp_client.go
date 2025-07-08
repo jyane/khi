@@ -24,6 +24,7 @@ import (
 	"log/slog"
 	"math"
 	"net/http"
+	"slices"
 	"strings"
 	"sync"
 
@@ -377,6 +378,11 @@ func (c *GCPClientImpl) GetAnthosOnBaremetalClusterNames(ctx context.Context, pr
 		}
 	}()
 	wg.Wait()
+
+	// Remove duplicated cluster names.
+	slices.Sort(result)
+	result = slices.Compact(result)
+
 	return result, nil
 }
 
@@ -462,6 +468,11 @@ func (c *GCPClientImpl) GetAnthosOnVMWareClusterNames(ctx context.Context, proje
 		}
 	}()
 	wg.Wait()
+
+	// Remove duplicated cluster names.
+	slices.Sort(result)
+	result = slices.Compact(result)
+
 	return result, nil
 }
 
