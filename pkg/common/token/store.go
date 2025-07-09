@@ -44,6 +44,7 @@ type BasicTokenStore struct {
 	tokenLock             sync.RWMutex
 	lastToken             *Token
 	lastTokenRefreshError error
+	initialRefreshOnce    sync.Once
 }
 
 func NewBasicTokenStore(tokenType string, resolver TokenResolver) *BasicTokenStore {
@@ -59,6 +60,12 @@ func (b *BasicTokenStore) GetType() string {
 
 // GetToken implements TokenStore.
 func (b *BasicTokenStore) GetToken(ctx context.Context) (*Token, error) {
+	// This ensures lastToken not to be nil while b.lastTokenRefreshError == nil.
+	// Also, sync.Once guarantees there is only 1 execution across all goroutines.
+	// Thus, we can set the token without the lock.
+	b.initialRefreshOnce.Do((func() {
+		b.refreshTokenWithoutLock(ctx)
+	}))
 	defer b.tokenLock.RUnlock()
 	b.tokenLock.RLock()
 	if b.lastToken == nil {
