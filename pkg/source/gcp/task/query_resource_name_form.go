@@ -21,39 +21,39 @@ import (
 
 	"github.com/GoogleCloudPlatform/khi/pkg/common/khictx"
 	"github.com/GoogleCloudPlatform/khi/pkg/common/typedmap"
-	inspectioncontract "github.com/GoogleCloudPlatform/khi/pkg/inspection/contract"
-	form_metadata "github.com/GoogleCloudPlatform/khi/pkg/inspection/metadata/form"
-	inspection_task "github.com/GoogleCloudPlatform/khi/pkg/inspection/task"
+	inspectionmetadata "github.com/GoogleCloudPlatform/khi/pkg/core/inspection/metadata"
+	inspectiontaskbase "github.com/GoogleCloudPlatform/khi/pkg/core/inspection/taskbase"
+	"github.com/GoogleCloudPlatform/khi/pkg/core/task/taskid"
 	"github.com/GoogleCloudPlatform/khi/pkg/source/gcp/api"
 	gcp_taskid "github.com/GoogleCloudPlatform/khi/pkg/source/gcp/taskid"
 	gcp_types "github.com/GoogleCloudPlatform/khi/pkg/source/gcp/types"
-	"github.com/GoogleCloudPlatform/khi/pkg/task/core/contract/taskid"
+	inspection_contract "github.com/GoogleCloudPlatform/khi/pkg/task/inspection/contract"
 )
 
 var resourceNamesInputKey = typedmap.NewTypedKey[*gcp_types.ResourceNamesInput]("query-resource-names")
 
-var QueryResourceNameInputTask = inspection_task.NewInspectionTask(gcp_taskid.LoggingFilterResourceNameInputTaskID, []taskid.UntypedTaskReference{}, func(ctx context.Context, taskMode inspectioncontract.InspectionTaskModeType) (*gcp_types.ResourceNamesInput, error) {
-	sharedMap := khictx.MustGetValue(ctx, inspectioncontract.InspectionSharedMap)
+var QueryResourceNameInputTask = inspectiontaskbase.NewInspectionTask(gcp_taskid.LoggingFilterResourceNameInputTaskID, []taskid.UntypedTaskReference{}, func(ctx context.Context, taskMode inspection_contract.InspectionTaskModeType) (*gcp_types.ResourceNamesInput, error) {
+	sharedMap := khictx.MustGetValue(ctx, inspection_contract.InspectionSharedMap)
 	resourceNamesInput := typedmap.GetOrSetFunc(sharedMap, resourceNamesInputKey, gcp_types.NewResourceNamesInput)
 
-	metadata := khictx.MustGetValue(ctx, inspectioncontract.InspectionRunMetadata)
-	formFields, found := typedmap.Get(metadata, form_metadata.FormFieldSetMetadataKey)
+	metadata := khictx.MustGetValue(ctx, inspection_contract.InspectionRunMetadata)
+	formFields, found := typedmap.Get(metadata, inspectionmetadata.FormFieldSetMetadataKey)
 	if !found {
 		return nil, fmt.Errorf("failed to get form fields from run metadata")
 	}
 
-	requestInput := khictx.MustGetValue(ctx, inspectioncontract.InspectionTaskInput)
+	requestInput := khictx.MustGetValue(ctx, inspection_contract.InspectionTaskInput)
 
-	queryForms := []form_metadata.ParameterFormField{}
+	queryForms := []inspectionmetadata.ParameterFormField{}
 	for _, form := range resourceNamesInput.GetQueryResourceNamePairs() {
 		defaultValue := strings.Join(form.DefaultResourceNames, " ")
-		formFieldBase := form_metadata.ParameterFormFieldBase{
+		formFieldBase := inspectionmetadata.ParameterFormFieldBase{
 			Priority:    0,
 			ID:          form.GetInputID(),
-			Type:        form_metadata.Text,
+			Type:        inspectionmetadata.Text,
 			Label:       form.QueryID,
 			Description: "",
-			HintType:    form_metadata.None,
+			HintType:    inspectionmetadata.None,
 			Hint:        "",
 		}
 		// This task validates the inputs only.
@@ -64,26 +64,26 @@ var QueryResourceNameInputTask = inspection_task.NewInspectionTask(gcp_taskid.Lo
 				resourceNameWithoutSurroundingSpace := strings.TrimSpace(resourceNameFromInput)
 				err := api.ValidateResourceNameOnLogEntriesList(resourceNameWithoutSurroundingSpace)
 				if err != nil {
-					formFieldBase.HintType = form_metadata.Error
+					formFieldBase.HintType = inspectionmetadata.Error
 					formFieldBase.Hint = fmt.Sprintf("%d: %s", i, err.Error())
 					break
 				}
 			}
 		}
-		queryForms = append(queryForms, &form_metadata.TextParameterFormField{
+		queryForms = append(queryForms, &inspectionmetadata.TextParameterFormField{
 			ParameterFormFieldBase: formFieldBase,
 			Default:                defaultValue,
 		})
 	}
 
-	groupForm := form_metadata.GroupParameterFormField{
-		ParameterFormFieldBase: form_metadata.ParameterFormFieldBase{
+	groupForm := inspectionmetadata.GroupParameterFormField{
+		ParameterFormFieldBase: inspectionmetadata.ParameterFormFieldBase{
 			Priority:    -1000000,
 			ID:          gcp_taskid.LoggingFilterResourceNameInputTaskID.ReferenceIDString(),
-			Type:        form_metadata.Group,
+			Type:        inspectionmetadata.Group,
 			Label:       "Logging filter resource names (advanced)",
 			Description: "Override these parameters when your logs are not on the same project of the cluster, or customize the log filter target resources.",
-			HintType:    form_metadata.None,
+			HintType:    inspectionmetadata.None,
 			Hint:        "",
 		},
 		Children:           queryForms,

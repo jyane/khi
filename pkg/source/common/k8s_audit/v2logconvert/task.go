@@ -21,26 +21,26 @@ import (
 	"time"
 
 	"github.com/GoogleCloudPlatform/khi/pkg/common/khictx"
+	inspectionmetadata "github.com/GoogleCloudPlatform/khi/pkg/core/inspection/metadata"
+	"github.com/GoogleCloudPlatform/khi/pkg/core/inspection/progressutil"
+	inspectiontaskbase "github.com/GoogleCloudPlatform/khi/pkg/core/inspection/taskbase"
 	coretask "github.com/GoogleCloudPlatform/khi/pkg/core/task"
-	inspectioncontract "github.com/GoogleCloudPlatform/khi/pkg/inspection/contract"
-	"github.com/GoogleCloudPlatform/khi/pkg/inspection/metadata/progress"
-	"github.com/GoogleCloudPlatform/khi/pkg/inspection/progressutil"
-	inspection_task "github.com/GoogleCloudPlatform/khi/pkg/inspection/task"
+	"github.com/GoogleCloudPlatform/khi/pkg/core/task/taskid"
 	common_k8saudit_taskid "github.com/GoogleCloudPlatform/khi/pkg/source/common/k8s_audit/taskid"
-	"github.com/GoogleCloudPlatform/khi/pkg/task/core/contract/taskid"
+	inspection_contract "github.com/GoogleCloudPlatform/khi/pkg/task/inspection/contract"
 )
 
-var Task = inspection_task.NewProgressReportableInspectionTask(common_k8saudit_taskid.LogConvertTaskID, []taskid.UntypedTaskReference{
+var Task = inspectiontaskbase.NewProgressReportableInspectionTask(common_k8saudit_taskid.LogConvertTaskID, []taskid.UntypedTaskReference{
 	common_k8saudit_taskid.CommonAuitLogSource,
-}, func(ctx context.Context, taskMode inspectioncontract.InspectionTaskModeType, tp *progress.TaskProgress) (struct{}, error) {
-	if taskMode == inspectioncontract.TaskModeDryRun {
+}, func(ctx context.Context, taskMode inspection_contract.InspectionTaskModeType, tp *inspectionmetadata.TaskProgressMetadata) (struct{}, error) {
+	if taskMode == inspection_contract.TaskModeDryRun {
 		return struct{}{}, nil
 	}
-	builder := khictx.MustGetValue(ctx, inspectioncontract.CurrentHistoryBuilder)
+	builder := khictx.MustGetValue(ctx, inspection_contract.CurrentHistoryBuilder)
 	logs := coretask.GetTaskResult(ctx, common_k8saudit_taskid.CommonAuitLogSource)
 
 	processedCount := atomic.Int32{}
-	updator := progressutil.NewProgressUpdator(tp, time.Second, func(tp *progress.TaskProgress) {
+	updator := progressutil.NewProgressUpdator(tp, time.Second, func(tp *inspectionmetadata.TaskProgressMetadata) {
 		current := processedCount.Load()
 		tp.Percentage = float32(current) / float32(len(logs.Logs))
 		tp.Message = fmt.Sprintf("%d/%d", current, len(logs.Logs))

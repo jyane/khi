@@ -18,11 +18,11 @@ import (
 	"context"
 
 	common_task "github.com/GoogleCloudPlatform/khi/pkg/core/task"
-	inspection_task "github.com/GoogleCloudPlatform/khi/pkg/inspection/task"
+	"github.com/GoogleCloudPlatform/khi/pkg/core/task/taskid"
 	"github.com/GoogleCloudPlatform/khi/pkg/source/gcp/task"
-	"github.com/GoogleCloudPlatform/khi/pkg/task/core/contract/taskid"
+	inspection_contract "github.com/GoogleCloudPlatform/khi/pkg/task/inspection/contract"
 )
 
 var AnthosOnAWSClusterNamePrefixTask = common_task.NewTask(taskid.NewImplementationID(task.ClusterNamePrefixTaskID, "gke-on-aws"), []taskid.UntypedTaskReference{}, func(ctx context.Context) (string, error) {
 	return "awsClusters/", nil
-}, inspection_task.InspectionTypeLabel(InspectionTypeId))
+}, inspection_contract.InspectionTypeLabel(InspectionTypeId))

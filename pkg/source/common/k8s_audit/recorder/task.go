@@ -22,18 +22,17 @@ import (
 
 	"github.com/GoogleCloudPlatform/khi/pkg/common/khictx"
 	"github.com/GoogleCloudPlatform/khi/pkg/common/worker"
-	inspectioncontract "github.com/GoogleCloudPlatform/khi/pkg/inspection/contract"
-	"github.com/GoogleCloudPlatform/khi/pkg/inspection/metadata/progress"
-	"github.com/GoogleCloudPlatform/khi/pkg/inspection/progressutil"
-	inspection_task "github.com/GoogleCloudPlatform/khi/pkg/inspection/task"
+	inspectionmetadata "github.com/GoogleCloudPlatform/khi/pkg/core/inspection/metadata"
+	"github.com/GoogleCloudPlatform/khi/pkg/core/inspection/progressutil"
+	inspectiontaskbase "github.com/GoogleCloudPlatform/khi/pkg/core/inspection/taskbase"
+	"github.com/GoogleCloudPlatform/khi/pkg/core/task/taskid"
 	"github.com/GoogleCloudPlatform/khi/pkg/model/enum"
 	"github.com/GoogleCloudPlatform/khi/pkg/model/history"
 	common_k8saudit_taskid "github.com/GoogleCloudPlatform/khi/pkg/source/common/k8s_audit/taskid"
 	"github.com/GoogleCloudPlatform/khi/pkg/source/common/k8s_audit/types"
 	gcp_task "github.com/GoogleCloudPlatform/khi/pkg/source/gcp/task"
-	"github.com/GoogleCloudPlatform/khi/pkg/task/core/contract/taskid"
+	inspection_contract "github.com/GoogleCloudPlatform/khi/pkg/task/inspection/contract"
 
-	coreinspection "github.com/GoogleCloudPlatform/khi/pkg/core/inspection"
 	coretask "github.com/GoogleCloudPlatform/khi/pkg/core/task"
 )
 
@@ -64,16 +63,16 @@ func (r *RecorderTaskManager) AddRecorder(name string, dependencies []taskid.Unt
 		common_k8saudit_taskid.LogConvertTaskID.Ref(),
 		common_k8saudit_taskid.ManifestGenerateTaskID.Ref(),
 	}
-	newTask := inspection_task.NewProgressReportableInspectionTask(r.GetRecorderTaskName(name), append(dependenciesBase, dependencies...), func(ctx context.Context, taskMode inspectioncontract.InspectionTaskModeType, tp *progress.TaskProgress) (any, error) {
-		if taskMode == inspectioncontract.TaskModeDryRun {
+	newTask := inspectiontaskbase.NewProgressReportableInspectionTask(r.GetRecorderTaskName(name), append(dependenciesBase, dependencies...), func(ctx context.Context, taskMode inspection_contract.InspectionTaskModeType, tp *inspectionmetadata.TaskProgressMetadata) (any, error) {
+		if taskMode == inspection_contract.TaskModeDryRun {
 			return struct{}{}, nil
 		}
-		builder := khictx.MustGetValue(ctx, inspectioncontract.CurrentHistoryBuilder)
+		builder := khictx.MustGetValue(ctx, inspection_contract.CurrentHistoryBuilder)
 		groupedLogs := coretask.GetTaskResult(ctx, common_k8saudit_taskid.ManifestGenerateTaskID.Ref())
 
 		filteredLogs, allCount := filterMatchedGroupedLogs(ctx, groupedLogs, logGroupFilter)
 		processedLogCount := atomic.Int32{}
-		updator := progressutil.NewProgressUpdator(tp, time.Second, func(tp *progress.TaskProgress) {
+		updator := progressutil.NewProgressUpdator(tp, time.Second, func(tp *inspectionmetadata.TaskProgressMetadata) {
 			current := processedLogCount.Load()
 			tp.Percentage = float32(current) / float32(allCount)
 			tp.Message = fmt.Sprintf("%d/%d", current, allCount)
@@ -120,19 +119,19 @@ func (r *RecorderTaskManager) GetRecorderTaskName(recorderName string) taskid.Ta
 	return taskid.NewDefaultImplementationID[any](fmt.Sprintf("%s/feature/k8s_audit/%s/recorder/%s", gcp_task.GCPPrefix, r.recorderPrefix, recorderName))
 }
 
-func (r *RecorderTaskManager) Register(server *coreinspection.InspectionTaskServer, inspectionTypes ...string) error {
+func (r *RecorderTaskManager) Register(registry coretask.TaskRegistry, inspectionTypes ...string) error {
 	recorderTaskIds := []taskid.UntypedTaskReference{}
 	for _, recorder := range r.recorderTasks {
-		err := server.AddTask(recorder)
+		err := registry.AddTask(recorder)
 		if err != nil {
 			return err
 		}
 		recorderTaskIds = append(recorderTaskIds, recorder.UntypedID().GetUntypedReference())
 	}
-	waiterTask := inspection_task.NewInspectionTask(r.taskID, recorderTaskIds, func(ctx context.Context, taskMode inspectioncontract.InspectionTaskModeType) (struct{}, error) {
+	waiterTask := inspectiontaskbase.NewInspectionTask(r.taskID, recorderTaskIds, func(ctx context.Context, taskMode inspection_contract.InspectionTaskModeType) (struct{}, error) {
 		return struct{}{}, nil
-	}, inspection_task.FeatureTaskLabel("Kubernetes Audit Log", `Gather kubernetes audit logs and visualize resource modifications.`, enum.LogTypeAudit, true, inspectionTypes...))
-	err := server.AddTask(waiterTask)
+	}, inspection_contract.FeatureTaskLabel("Kubernetes Audit Log", `Gather kubernetes audit logs and visualize resource modifications.`, enum.LogTypeAudit, true, inspectionTypes...))
+	err := registry.AddTask(waiterTask)
 	return err
 }
 

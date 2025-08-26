@@ -18,16 +18,16 @@ import (
 	"context"
 	"testing"
 
+	inspectiontest "github.com/GoogleCloudPlatform/khi/pkg/core/inspection/test"
 	coretask "github.com/GoogleCloudPlatform/khi/pkg/core/task"
-	inspectioncontract "github.com/GoogleCloudPlatform/khi/pkg/inspection/contract"
-	inspection_task_test "github.com/GoogleCloudPlatform/khi/pkg/inspection/test"
-	"github.com/GoogleCloudPlatform/khi/pkg/log"
+	tasktest "github.com/GoogleCloudPlatform/khi/pkg/core/task/test"
 	"github.com/GoogleCloudPlatform/khi/pkg/model"
 	"github.com/GoogleCloudPlatform/khi/pkg/model/enum"
+	"github.com/GoogleCloudPlatform/khi/pkg/model/log"
 	common_k8saudit_taskid "github.com/GoogleCloudPlatform/khi/pkg/source/common/k8s_audit/taskid"
 	"github.com/GoogleCloudPlatform/khi/pkg/source/common/k8s_audit/types"
 	"github.com/GoogleCloudPlatform/khi/pkg/source/common/k8s_audit/v2commonlogparse"
-	task_test "github.com/GoogleCloudPlatform/khi/pkg/task/test"
+	inspection_contract "github.com/GoogleCloudPlatform/khi/pkg/task/inspection/contract"
 	"github.com/GoogleCloudPlatform/khi/pkg/testutil/testlog"
 
 	_ "github.com/GoogleCloudPlatform/khi/internal/testflags"
@@ -46,9 +46,9 @@ var _ types.AuditLogFieldExtractor = (*stubAuditLogFieldExtractor)(nil)
 
 func TestGroupByTimelineTask(t *testing.T) {
 	t.Run("it ignores dryrun mode", func(t *testing.T) {
-		ctx := inspection_task_test.WithDefaultTestInspectionTaskContext(context.Background())
-		result, _, err := inspection_task_test.RunInspectionTask(ctx, Task, inspectioncontract.TaskModeDryRun, map[string]any{},
-			task_test.NewTaskDependencyValuePair(common_k8saudit_taskid.CommonLogParseTaskID.Ref(), nil))
+		ctx := inspectiontest.WithDefaultTestInspectionTaskContext(context.Background())
+		result, _, err := inspectiontest.RunInspectionTask(ctx, Task, inspection_contract.TaskModeDryRun, map[string]any{},
+			tasktest.NewTaskDependencyValuePair(common_k8saudit_taskid.CommonLogParseTaskID.Ref(), nil))
 		if err != nil {
 			t.Error(err)
 		}
@@ -87,10 +87,10 @@ timestamp: 2024-01-01T00:00:00+09:00`
 			logs = append(logs, tl.With(opt...).MustBuildLogEntity())
 		}
 
-		ctx := inspection_task_test.WithDefaultTestInspectionTaskContext(context.Background())
-		result, _, err := inspection_task_test.RunInspectionTaskWithDependency(ctx, Task, []coretask.UntypedTask{
+		ctx := inspectiontest.WithDefaultTestInspectionTaskContext(context.Background())
+		result, _, err := inspectiontest.RunInspectionTaskWithDependency(ctx, Task, []coretask.UntypedTask{
 			v2commonlogparse.Task,
-			task_test.StubTaskFromReferenceID(common_k8saudit_taskid.CommonAuitLogSource, &types.AuditLogParserLogSource{
+			tasktest.StubTaskFromReferenceID(common_k8saudit_taskid.CommonAuitLogSource, &types.AuditLogParserLogSource{
 				Logs: logs,
 				Extractor: &stubAuditLogFieldExtractor{
 					Extractor: func(ctx context.Context, log *log.Log) (*types.AuditLogParserInput, error) {
@@ -121,7 +121,7 @@ timestamp: 2024-01-01T00:00:00+09:00`
 					},
 				},
 			}, nil),
-		}, inspectioncontract.TaskModeRun, map[string]any{})
+		}, inspection_contract.TaskModeRun, map[string]any{})
 		if err != nil {
 			t.Error(err)
 		}
