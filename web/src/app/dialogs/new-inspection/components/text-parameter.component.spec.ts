@@ -19,6 +19,7 @@ import { TextParameterComponent } from './text-parameter.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconRegistry } from '@angular/material/icon';
 import {
+  ParameterFormValidationTiming,
   ParameterHintType,
   TextParameterFormField,
 } from 'src/app/common/schema/form-types';
@@ -50,6 +51,7 @@ describe('TextParameterComponent', () => {
     hint: 'parameter test validation failed',
     readonly: false,
     suggestions: ['foo', 'bar', 'qux'],
+    validationTiming: ParameterFormValidationTiming.Change,
   } as TextParameterFormField;
 
   beforeAll(() => {
@@ -96,13 +98,34 @@ describe('TextParameterComponent', () => {
     expect(await matInput.getPlaceholder()).toBe('test-default-value');
   });
 
-  it('should set the value to store when input received', async () => {
+  it('should set the value to store when input received when validatingTiming=onchange', async () => {
     fixture.detectChanges();
 
     expect(fixture.componentInstance).toBeTruthy();
     const matInput = await harnessLoader.getHarness(MatInputHarness);
 
     await matInput.setValue('updated value');
+    expect(await firstValueFrom(parameterStore.watchAll())).toEqual({
+      'test-parameter-id': 'updated value',
+    });
+  });
+
+  it('should emit value only on blur and not set the parameter on input if validatingTiming=onblur ', async () => {
+    fixture.componentRef.setInput('parameter', {
+      ...defaultParameter,
+      validationTiming: ParameterFormValidationTiming.Blur,
+    });
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance).toBeTruthy();
+    const matInput = await harnessLoader.getHarness(MatInputHarness);
+
+    await matInput.setValue('updated value');
+    expect(await firstValueFrom(parameterStore.watchAll())).toEqual({
+      'test-parameter-id': 'the default value',
+    });
+
+    await matInput.blur();
     expect(await firstValueFrom(parameterStore.watchAll())).toEqual({
       'test-parameter-id': 'updated value',
     });

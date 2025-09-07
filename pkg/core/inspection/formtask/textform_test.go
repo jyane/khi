@@ -50,6 +50,7 @@ func TestTextFormDefinitionBuilder(t *testing.T) {
 				ParameterFormFieldBase: inspectionmetadata.ParameterFormFieldBase{
 					HintType: inspectionmetadata.None,
 				},
+				ValidationTiming: inspectionmetadata.Change,
 			},
 		},
 		{
@@ -64,8 +65,9 @@ func TestTextFormDefinitionBuilder(t *testing.T) {
 				ParameterFormFieldBase: inspectionmetadata.ParameterFormFieldBase{
 					HintType: inspectionmetadata.None,
 				},
-				Readonly: false,
-				Default:  "foo-default",
+				Readonly:         false,
+				Default:          "foo-default",
+				ValidationTiming: inspectionmetadata.Change,
 			},
 		},
 		{
@@ -83,7 +85,8 @@ func TestTextFormDefinitionBuilder(t *testing.T) {
 					HintType: inspectionmetadata.Error,
 					Hint:     "foo validation error",
 				},
-				Readonly: false,
+				Readonly:         false,
+				ValidationTiming: inspectionmetadata.Change,
 			},
 		},
 		{
@@ -100,7 +103,8 @@ func TestTextFormDefinitionBuilder(t *testing.T) {
 				ParameterFormFieldBase: inspectionmetadata.ParameterFormFieldBase{
 					HintType: inspectionmetadata.None,
 				},
-				Readonly: true,
+				Readonly:         true,
+				ValidationTiming: inspectionmetadata.Change,
 			},
 		},
 		{
@@ -117,8 +121,9 @@ func TestTextFormDefinitionBuilder(t *testing.T) {
 				ParameterFormFieldBase: inspectionmetadata.ParameterFormFieldBase{
 					HintType: inspectionmetadata.None,
 				},
-				Readonly: true,
-				Default:  "foo-from-default",
+				Readonly:         true,
+				Default:          "foo-from-default",
+				ValidationTiming: inspectionmetadata.Change,
 			},
 		},
 		{
@@ -136,7 +141,8 @@ func TestTextFormDefinitionBuilder(t *testing.T) {
 					HintType: inspectionmetadata.Info,
 					Hint:     "foo-hint",
 				},
-				Readonly: false,
+				Readonly:         false,
+				ValidationTiming: inspectionmetadata.Change,
 			},
 		},
 		{
@@ -153,8 +159,9 @@ func TestTextFormDefinitionBuilder(t *testing.T) {
 				ParameterFormFieldBase: inspectionmetadata.ParameterFormFieldBase{
 					HintType: inspectionmetadata.None,
 				},
-				Readonly: true,
-				Default:  "foo-from-default",
+				Readonly:         true,
+				Default:          "foo-from-default",
+				ValidationTiming: inspectionmetadata.Change,
 			},
 		},
 		{
@@ -179,6 +186,7 @@ func TestTextFormDefinitionBuilder(t *testing.T) {
 					"foo-suggest2",
 					"foo-suggest3",
 				},
+				ValidationTiming: inspectionmetadata.Change,
 			},
 		},
 	}
