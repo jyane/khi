@@ -51,38 +51,38 @@ var _ (log.FieldSetReader) = (*testInsertIDTimeStampCommonFieldReader)(nil)
 func TestRecordLogSummary(t *testing.T) {
 	log := testlog.NewEmptyLogWithID("foo")
 	cs := NewChangeSet(log)
-	cs.RecordLogSummary("bar")
-	if cs.logSummaryRewrite != "bar" {
-		t.Errorf("logSummaryRewrite is not rewritten to the expected value")
+	cs.SetLogSummary("bar")
+	if cs.LogSummary != "bar" {
+		t.Errorf("SetLogSummary is not rewritten to the expected value")
 	}
 }
 
 func TestRecordLogSeverity(t *testing.T) {
 	log := testlog.NewEmptyLogWithID("foo")
 	cs := NewChangeSet(log)
-	cs.RecordLogSeverity(enum.SeverityWarning)
-	if cs.logSeverityRewrite != enum.SeverityWarning {
-		t.Errorf("logSeverityRewrite is not rewritten to the expected value")
+	cs.SetLogSeverity(enum.SeverityWarning)
+	if cs.LogSeverity != enum.SeverityWarning {
+		t.Errorf("SetLogSeverity is not rewritten to the expected value")
 	}
 }
 
 func TestRecordEvents(t *testing.T) {
 	log := testlog.NewEmptyLogWithID("foo")
 	cs := NewChangeSet(log)
-	cs.RecordEvent(resourcepath.KindLayerGeneralItem("A", "B"))
-	cs.RecordEvent(resourcepath.KindLayerGeneralItem("A", "C"))
-	if diff := cmp.Diff(cs.events, map[string][]*ResourceEvent{
+	cs.AddEvent(resourcepath.KindLayerGeneralItem("A", "B"))
+	cs.AddEvent(resourcepath.KindLayerGeneralItem("A", "C"))
+	if diff := cmp.Diff(cs.EventsMap, map[string][]*ResourceEvent{
 		"A#B": {{Log: "foo"}},
 		"A#C": {{Log: "foo"}},
 	}); diff != "" {
-		t.Errorf("RecordEvent didn't modify ChangeSet as expected\n%s", diff)
+		t.Errorf("AddEvent didn't modify ChangeSet as expected\n%s", diff)
 	}
 }
 
 func TestGetEvents(t *testing.T) {
 	log := testlog.NewEmptyLogWithID("foo")
 	cs := NewChangeSet(log)
-	cs.RecordEvent(resourcepath.KindLayerGeneralItem("A", "B"))
+	cs.AddEvent(resourcepath.KindLayerGeneralItem("A", "B"))
 	testCases := []struct {
 		name           string
 		resourcePath   resourcepath.ResourcePath
@@ -117,36 +117,36 @@ func TestGetEvents(t *testing.T) {
 func TestRecordRevisions(t *testing.T) {
 	log := testlog.NewEmptyLogWithID("foo")
 	cs := NewChangeSet(log)
-	cs.RecordRevision(resourcepath.KindLayerGeneralItem("A", "B"), &StagingResourceRevision{
+	cs.AddRevision(resourcepath.KindLayerGeneralItem("A", "B"), &StagingResourceRevision{
 		Inferred: true,
 	})
-	cs.RecordRevision(resourcepath.KindLayerGeneralItem("A", "B"), &StagingResourceRevision{})
-	cs.RecordRevision(resourcepath.KindLayerGeneralItem("A", "C"), &StagingResourceRevision{})
-	if diff := cmp.Diff(cs.revisions, map[string][]*StagingResourceRevision{
+	cs.AddRevision(resourcepath.KindLayerGeneralItem("A", "B"), &StagingResourceRevision{})
+	cs.AddRevision(resourcepath.KindLayerGeneralItem("A", "C"), &StagingResourceRevision{})
+	if diff := cmp.Diff(cs.RevisionsMap, map[string][]*StagingResourceRevision{
 		"A#B": {{Inferred: true}, {}},
 		"A#C": {{}},
 	}); diff != "" {
-		t.Errorf("RecordRevision didn't modify ChangeSet as expected\n%s", diff)
+		t.Errorf("AddRevision didn't modify ChangeSet as expected\n%s", diff)
 	}
 
-	if diff := cmp.Diff(cs.annotations, []LogAnnotation{
+	if diff := cmp.Diff(cs.Annotations, []LogAnnotation{
 		&ResourceReferenceAnnotation{Path: "A#B"},
 		&ResourceReferenceAnnotation{Path: "A#C"},
 	}); diff != "" {
-		t.Errorf("RecordRevision didn't modify log annotations in ChangeSet as expected\n%s", diff)
+		t.Errorf("AddRevision didn't modify log annotations in ChangeSet as expected\n%s", diff)
 	}
 }
 
 func TestGetRevisions(t *testing.T) {
 	log := testlog.NewEmptyLogWithID("foo")
 	cs := NewChangeSet(log)
-	cs.RecordRevision(resourcepath.KindLayerGeneralItem("A", "B"), &StagingResourceRevision{
+	cs.AddRevision(resourcepath.KindLayerGeneralItem("A", "B"), &StagingResourceRevision{
 		Body: "AB1",
 	})
-	cs.RecordRevision(resourcepath.KindLayerGeneralItem("A", "B"), &StagingResourceRevision{
+	cs.AddRevision(resourcepath.KindLayerGeneralItem("A", "B"), &StagingResourceRevision{
 		Body: "AB2",
 	})
-	cs.RecordRevision(resourcepath.KindLayerGeneralItem("A", "C"), &StagingResourceRevision{
+	cs.AddRevision(resourcepath.KindLayerGeneralItem("A", "C"), &StagingResourceRevision{
 		Body: "AC1",
 	})
 	testCases := []struct {
@@ -220,7 +220,7 @@ func TestChangesetFlushIsThreadSafe(t *testing.T) {
 		pool.Run(func() {
 			for _, l := range currentGroup {
 				cs := NewChangeSet(l)
-				cs.RecordRevision(groupPath, &StagingResourceRevision{})
+				cs.AddRevision(groupPath, &StagingResourceRevision{})
 				paths, err := cs.FlushToHistory(builder)
 
 				for _, path := range paths {
