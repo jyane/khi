@@ -17,6 +17,7 @@ package googlecloudcommon_contract
 import (
 	"time"
 
+	"github.com/GoogleCloudPlatform/khi/pkg/api/googlecloud"
 	"github.com/GoogleCloudPlatform/khi/pkg/core/task/taskid"
 )
 
@@ -45,3 +46,18 @@ var InputStartTimeTaskID = taskid.NewDefaultImplementationID[time.Time](GoogleCl
 
 // InputLocationsTaskID is the task ID for the locations of the target resource.
 var InputLocationsTaskID = taskid.NewDefaultImplementationID[string](GoogleCloudCommonTaskIDPrefix + "input-location")
+
+// APIClientFactoryTaskID is the task ID to generate the ClientFactory. This factory is instantiated with the options generated from the task with APIClientFactoryOptionsTaskID.
+var APIClientFactoryTaskID = taskid.NewDefaultImplementationID[*googlecloud.ClientFactory](GoogleCloudCommonTaskIDPrefix + "api-client-factory")
+
+// APIClientFactoryOptionsTaskID is the task ID to generate options list for the ClientFactory. This can be overridden with the selection priority label defined in the coretask package.
+var APIClientFactoryOptionsTaskID = taskid.NewDefaultImplementationID[[]googlecloud.ClientFactoryOption](GoogleCloudCommonTaskIDPrefix + "api-client-factory-options")
+
+// APIClientCallOptionsInjectorTaskID is the task ID to inject CallOptionInjector reference.
+var APIClientCallOptionsInjectorTaskID = taskid.NewDefaultImplementationID[*googlecloud.CallOptionInjector](GoogleCloudCommonTaskIDPrefix + "api-client-option-injector")
+
+// LocationFetcherTaskID is the task ID to inject the instance of LocationFetcher.
+var LocationFetcherTaskID = taskid.NewDefaultImplementationID[LocationFetcher](GoogleCloudCommonTaskIDPrefix + "location-fetcher")
+
+// LoggingFetcherTaskID is the task ID to inject the instance of LogFetcher.
+var LoggingFetcherTaskID = taskid.NewDefaultImplementationID[LogFetcher](GoogleCloudCommonTaskIDPrefix + "log-fetcher")

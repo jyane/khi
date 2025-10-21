@@ -29,5 +29,10 @@ func Register(registry coreinspection.InspectionTaskRegistry) error {
 		InputStartTimeTask,
 		InputEndTimeTask,
 		InputLocationsTask,
+		APIClientFactoryTask,
+		APIClientFactoryOptionsTask,
+		APICallOptionsInjectorTask,
+		LocationFetcherTask,
+		LoggingFetcherTask,
 	)
 }

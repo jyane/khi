@@ -29,5 +29,6 @@ func Register(registry coreinspection.InspectionTaskRegistry) error {
 	return coretask.RegisterTasks(registry,
 		AutocompleteGKEOnAWSClusterNames,
 		AnthosOnAWSClusterNamePrefixTask,
+		ClusterListFetcherTask,
 	)
 }

@@ -19,9 +19,9 @@ import (
 	"log/slog"
 
 	"cloud.google.com/go/profiler"
-	googlecloudapi "github.com/GoogleCloudPlatform/khi/pkg/api/googlecloud"
-	"github.com/GoogleCloudPlatform/khi/pkg/api/googlecloud/accesstoken"
-	"github.com/GoogleCloudPlatform/khi/pkg/api/googlecloud/quotaproject"
+	"github.com/GoogleCloudPlatform/khi/pkg/api/googlecloud/legacy"
+	"github.com/GoogleCloudPlatform/khi/pkg/api/googlecloud/oauth"
+	"github.com/GoogleCloudPlatform/khi/pkg/api/googlecloud/options"
 	"github.com/GoogleCloudPlatform/khi/pkg/common/flag"
 	coreinit "github.com/GoogleCloudPlatform/khi/pkg/core/init"
 	coreinspection "github.com/GoogleCloudPlatform/khi/pkg/core/inspection"
@@ -31,6 +31,7 @@ import (
 	"github.com/GoogleCloudPlatform/khi/pkg/parameters"
 	"github.com/GoogleCloudPlatform/khi/pkg/server"
 	"github.com/GoogleCloudPlatform/khi/pkg/server/option"
+	googlecloudcommon_contract "github.com/GoogleCloudPlatform/khi/pkg/task/inspection/googlecloudcommon/contract"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -41,11 +42,17 @@ func init() {
 	coreinit.RegisterInitExtension(DefaultInitExtensionOrder, &DefaultInitExtension{})
 }
 
-type oauthServerOption struct{}
+type oauthServerOption struct {
+	taskServer *coreinspection.InspectionTaskServer
+}
 
 // Apply implements option.Option.
 func (o *oauthServerOption) Apply(engine *gin.Engine) error {
-	return accesstoken.DefaultOAuthTokenResolver.SetServer(engine)
+	oauthServer := oauth.NewOAuthServer(engine, parameters.Auth.GetOAuthConfig(), *parameters.Auth.OAuthRedirectTargetServingPath, *parameters.Auth.OAuthStateSuffix)
+	o.taskServer.AddRunContextOption(
+		coreinspection.RunContextOptionArrayElementFromValue(googlecloudcommon_contract.APIClientFactoryOptionsContextKey, options.OAuth(oauthServer)),
+	)
+	return nil
 }
 
 // ID implements option.Option.
@@ -58,9 +65,16 @@ func (o *oauthServerOption) Order() int {
 	return 10000
 }
 
+func newOAuthServerOption(taskServer *coreinspection.InspectionTaskServer) *oauthServerOption {
+	return &oauthServerOption{
+		taskServer: taskServer,
+	}
+}
+
 var _ option.Option = (*oauthServerOption)(nil)
 
 type DefaultInitExtension struct {
+	taskServer *coreinspection.InspectionTaskServer
 }
 
 // BeforeAll implements coreinit.InitExtension.
@@ -98,19 +112,23 @@ func (d *DefaultInitExtension) AfterParsingParameters() error {
 		slog.Info("Cloud Profiler is enabled")
 	}
 	k8s.GenerateDefaultMergeConfig()
-	if *parameters.Auth.QuotaProjectID != "" {
-		googlecloudapi.DefaultGCPClientFactory.RegisterHeaderProvider(quotaproject.NewHeaderProvider(*parameters.Auth.QuotaProjectID))
-	}
 	return nil
 }
 
 // ConfigureInspectionTaskServer implements coreinit.InitExtension.
 func (d *DefaultInitExtension) ConfigureInspectionTaskServer(taskServer *coreinspection.InspectionTaskServer) error {
+	d.taskServer = taskServer
 	if !*parameters.Server.ViewerMode {
 		err := generated.RegisterAllInspectionTasks(taskServer)
 		if err != nil {
 			return err
 		}
+	}
+	if *parameters.Auth.QuotaProjectID != "" {
+		taskServer.AddRunContextOption(coreinspection.RunContextOptionArrayElementFromValue(googlecloudcommon_contract.APIClientFactoryOptionsContextKey, options.QuotaProject(*parameters.Auth.QuotaProjectID)))
+	}
+	if *parameters.Auth.AccessToken != "" {
+		taskServer.AddRunContextOption(coreinspection.RunContextOptionArrayElementFromValue(googlecloudcommon_contract.APIClientFactoryOptionsContextKey, options.TokenSource(legacy.NewRawTokenTokenSource(*parameters.Auth.AccessToken))))
 	}
 	return nil
 }
@@ -129,7 +147,7 @@ func (d *DefaultInitExtension) ConfigureKHIWebServerFactory(serverFactory *serve
 	}
 
 	if parameters.Auth.OAuthEnabled() {
-		serverFactory.AddOptions(&oauthServerOption{})
+		serverFactory.AddOptions(newOAuthServerOption(d.taskServer))
 	}
 	return nil
 }
