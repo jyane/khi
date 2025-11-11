@@ -42,7 +42,7 @@ func (r *HasRevision) Assert(t *testing.T, cs *history.ChangeSet) {
 		Path: r.ResourcePath,
 	})
 	if len(revisions) == 0 {
-		t.Errorf("no revisions found for %s. avaolable revisions are %v", r.ResourcePath, cs.GetAllResourcePaths())
+		t.Errorf("no revisions found for %s. available revisions are %v", r.ResourcePath, cs.GetAllResourcePaths())
 		return
 	}
 	for _, rev := range revisions {
@@ -78,3 +78,35 @@ func (r *MatchResourcePathSet) Assert(t *testing.T, cs *history.ChangeSet) {
 }
 
 var _ ChangeSetAsserter = (*MatchResourcePathSet)(nil)
+
+type HasEvent struct {
+	ResourcePath string
+}
+
+// Assert implements ChangeSetAsserter.
+func (h *HasEvent) Assert(t *testing.T, cs *history.ChangeSet) {
+	t.Helper()
+	events := cs.GetEvents(resourcepath.ResourcePath{
+		Path: h.ResourcePath,
+	})
+	if len(events) == 0 {
+		t.Errorf("no events found for %s. available paths are: %v", h.ResourcePath, cs.GetAllResourcePaths())
+	}
+}
+
+var _ ChangeSetAsserter = (*HasEvent)(nil)
+
+type HasLogSummary struct {
+	WantLogSummary string
+}
+
+// Assert implements ChangeSetAsserter.
+func (h *HasLogSummary) Assert(t *testing.T, cs *history.ChangeSet) {
+	t.Helper()
+	if cs.LogSummary != h.WantLogSummary {
+		t.Errorf("log summary is not matching with the expected: want=%s, got=%s", h.WantLogSummary, cs.LogSummary)
+
+	}
+}
+
+var _ ChangeSetAsserter = (*HasLogSummary)(nil)
