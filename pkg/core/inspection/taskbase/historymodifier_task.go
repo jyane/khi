@@ -18,10 +18,10 @@ import (
 	"context"
 	"fmt"
 	"log/slog"
+	"runtime"
 	"sync/atomic"
 	"time"
 
-	"github.com/GoogleCloudPlatform/khi/pkg/common/errorreport"
 	"github.com/GoogleCloudPlatform/khi/pkg/common/khictx"
 	"github.com/GoogleCloudPlatform/khi/pkg/common/structured"
 	"github.com/GoogleCloudPlatform/khi/pkg/common/worker"
@@ -81,16 +81,14 @@ func NewHistoryModifierTask[T any](tid taskid.TaskImplementationID[struct{}], hi
 
 		processedLogCount.Store(0)
 
-		pool := worker.NewPool(16)
+		pool := worker.NewPool(runtime.GOMAXPROCS(0))
 		for _, group := range groupedLogs {
 			pool.Run(func() {
-				defer errorreport.CheckAndReportPanic()
-
 				var groupData T
-				err := builder.ParseLogsByGroups(ctx, group.Logs, func(logIndex int, l *log.Log) *history.ChangeSet {
-					processedLogCount.Add(1)
-					var err error
+				changedPaths := map[string]struct{}{}
+				for _, l := range group.Logs {
 					cs := history.NewChangeSet(l)
+					var err error
 					groupData, err = historyModifier.ModifyChangeSetFromLog(ctx, l, cs, builder, groupData)
 					if err != nil {
 						var yaml string
@@ -100,15 +98,22 @@ func NewHistoryModifierTask[T any](tid taskid.TaskImplementationID[struct{}], hi
 						} else {
 							yaml = string(yamlBytes)
 						}
-						slog.WarnContext(ctx, fmt.Sprintf("parser end with an error\n%s", err))
-						slog.DebugContext(ctx, yaml)
-						return nil
+						slog.WarnContext(ctx, "parser ended with an error", "error", err, "logContent", yaml)
+						continue
 					}
-					return cs
-				})
-				if err != nil {
-					slog.WarnContext(ctx, fmt.Sprintf("failed to complete parsing logs for group %s\nerr: %s", group.Group, err.Error()))
+					cp, err := cs.FlushToHistory(builder)
+					if err != nil {
+						slog.WarnContext(ctx, "failed to flush the changeset to history", "error", err)
+					}
+					for _, path := range cp {
+						changedPaths[path] = struct{}{}
+					}
 				}
+				for path := range changedPaths {
+					tb := builder.GetTimelineBuilder(path)
+					tb.Sort()
+				}
+				processedLogCount.Add(uint32(len(group.Logs)))
 			})
 		}
 		pool.Wait()
