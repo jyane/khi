@@ -117,8 +117,19 @@ func (builder *Builder) ensureResourcePath(resourcePath string) *Resource {
 				Children:         []*Resource{},
 				Relationship:     enum.RelationshipChild,
 				FullResourcePath: currentPath,
+				mu:               sync.RWMutex{},
+			}
+			if currentResource != nil {
+				currentResource.mu.Lock()
+			} else {
+				builder.historyLock.Lock()
 			}
 			*currentResourceContainer = append(*currentResourceContainer, &nr)
+			if currentResource != nil {
+				currentResource.mu.Unlock()
+			} else {
+				builder.historyLock.Unlock()
+			}
 			currentResource = &nr
 			currentResourceContainer = &nr.Children
 			resources[currentPath] = currentResource
@@ -176,7 +187,10 @@ func (builder *Builder) setLogSeverity(logId string, severity enum.Severity) err
 func (builder *Builder) GetTimelineBuilder(resourcePath string) *TimelineBuilder {
 	resource := builder.ensureResourcePath(resourcePath)
 	// When specified resource has no associated timeline
+	resource.mu.Lock()
+	defer resource.mu.Unlock()
 	if resource.Timeline == "" {
+		builder.historyLock.Lock()
 		tid := builder.timelineIDGenerator.Generate()
 		timelineMap := builder.timelinemap.AcquireShard(tid)
 		timeline := newTimeline(tid)
@@ -184,7 +198,9 @@ func (builder *Builder) GetTimelineBuilder(resourcePath string) *TimelineBuilder
 		builder.history.Timelines = append(builder.history.Timelines, timeline)
 		timelineMap[tid] = timeline
 		builder.timelinemap.ReleaseShard(tid)
+		builder.historyLock.Unlock()
 	}
+
 	// When the timeline builder was already created, then return it
 	timelineBuilderMap := builder.timelineBuilders.AcquireShard(resource.Timeline)
 	defer builder.timelineBuilders.ReleaseShard(resource.Timeline)
@@ -241,6 +257,8 @@ func (builder *Builder) addTimelineAlias(sourcePath string, destPath string) {
 
 func (builder *Builder) rewriteRelationship(path string, relationship enum.ParentRelationship) error {
 	resource := builder.ensureResourcePath(path)
+	resource.mu.Lock()
+	defer resource.mu.Unlock()
 	if resource.Relationship != relationship && resource.Relationship != enum.RelationshipChild {
 		return fmt.Errorf("failed to rewrite the parentRelationship of %s. It was already rewritten to %d", path, resource.Relationship)
 	}
