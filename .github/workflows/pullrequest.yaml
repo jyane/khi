@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Run markdownlint
         uses: DavidAnson/markdownlint-cli2-action@30a0e04f1870d58f8d717450cc6134995f993c63 # 19.1.0
@@ -37,39 +37,12 @@ jobs:
       id-token: 'write'
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Set up Go
-      uses: actions/setup-go@v5
+      uses: actions/setup-go@v6
       with:
         go-version-file: './go.mod'
-
-    # TODO: Configure Github Action after getting the Workload Identity Pool for this project
-    # https://github.com/GoogleCloudPlatform/khi/issues/29
-    # - name: Authenticate to Google Cloud
-    #   uses: google-github-actions/auth@v2
-    #   with:
-    #     workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
-    #     project_id: ${{ secrets.GCP_PROJECT_ID }}
-
-    # - name: Install gcloud CLI and get token
-    #   uses: google-github-actions/setup-gcloud@v2
-
-    # - name: Get gcloud token
-    #   id: gcloud-token
-    #   run: |
-    #     echo "#!/bin/bash\necho \"$(gcloud auth print-access-token)\"" > /usr/bin/gcloud
-    #     chmod +x /usr/bin/gcloud
-
-    # - name: Backend Test
-    #   run: |
-    #     mkdir ./pkg/server/dist
-    #     # A placeholder frontend code read from backend test
-    #     echo "" > ./pkg/server/dist/index.html
-    #     make coverage-go
-
-    # For now, we skip the cloud logging test
-    # TODO: Remove the flag after the cloud logging test is ready
     - name: Backend Test
       run: |
         make generate-backend
@@ -101,15 +74,15 @@ jobs:
       contents: 'read'
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Set up Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
         node-version-file: './.node-version'
 
     - name: Set up Go # Go dependency is needed for `make prepare-frontend`
-      uses: actions/setup-go@v5
+      uses: actions/setup-go@v6
       with:
         go-version-file: './go.mod'
 
@@ -145,15 +118,15 @@ jobs:
         configuration: [prod, dev]
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Set up Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
         node-version-file: './.node-version'
 
     - name: Set up Go # Go dependency is needed for `make prepare-frontend`
-      uses: actions/setup-go@v5
+      uses: actions/setup-go@v6
       with:
         go-version-file: './go.mod'
 
@@ -167,6 +140,27 @@ jobs:
     - name: Build web
       working-directory: ./web
       run: npx ng build --configuration ${{ matrix.configuration }}
+  build-binaries:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v6
+
+    - name: Set up Go
+      uses: actions/setup-go@v6
+      with:
+        go-version-file: './go.mod'
+    - name: Set up Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version-file: './.node-version'
+    - name: npm install
+      working-directory: ./web
+      run: npm ci
+    - name: Build binary
+      run: make build-go-binaries
 
   license-header-check:
     runs-on: ubuntu-latest
@@ -174,10 +168,10 @@ jobs:
       contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
           go-version-file: './go.mod'
 
