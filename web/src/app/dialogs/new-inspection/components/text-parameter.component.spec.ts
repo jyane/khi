@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import { provideZoneChangeDetection, NgModule } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TextParameterComponent } from './text-parameter.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -36,6 +37,9 @@ import {
   platformBrowserTesting,
 } from '@angular/platform-browser/testing';
 
+@NgModule({ providers: [provideZoneChangeDetection()] })
+export class ZoneChangeDetectionModule {}
+
 describe('TextParameterComponent', () => {
   let fixture: ComponentFixture<TextParameterComponent>;
   let harnessLoader: HarnessLoader;
@@ -57,7 +61,7 @@ describe('TextParameterComponent', () => {
   beforeAll(() => {
     TestBed.resetTestEnvironment();
     TestBed.initTestEnvironment(
-      BrowserTestingModule,
+      [ZoneChangeDetectionModule, BrowserTestingModule],
       platformBrowserTesting(),
       { teardown: { destroyAfterEach: false } },
     );

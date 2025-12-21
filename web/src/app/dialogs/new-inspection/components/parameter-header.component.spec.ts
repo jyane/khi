@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import { provideZoneChangeDetection, NgModule } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ParameterHeaderComponent } from './parameter-header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -31,6 +32,9 @@ import {
   BrowserTestingModule,
   platformBrowserTesting,
 } from '@angular/platform-browser/testing';
+@NgModule({ providers: [provideZoneChangeDetection()] })
+export class ZoneChangeDetectionModule {}
+
 describe('ParameterHeaderComponent', () => {
   let fixture: ComponentFixture<ParameterHeaderComponent>;
   let harnessLoader: HarnessLoader;
@@ -38,7 +42,7 @@ describe('ParameterHeaderComponent', () => {
   beforeAll(() => {
     TestBed.resetTestEnvironment();
     TestBed.initTestEnvironment(
-      BrowserTestingModule,
+      [ZoneChangeDetectionModule, BrowserTestingModule],
       platformBrowserTesting(),
       { teardown: { destroyAfterEach: false } },
     );

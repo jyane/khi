@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -24,7 +23,7 @@ import { AnnotationDecision } from './annotator';
   standalone: true,
   templateUrl: './common-toolbar-button.component.html',
   styleUrl: './common-toolbar-button.component.scss',
-  imports: [CommonModule, MatIconModule, MatTooltipModule],
+  imports: [MatIconModule, MatTooltipModule],
 })
 export class CommonToolbarButtonComponent {
   @Input()

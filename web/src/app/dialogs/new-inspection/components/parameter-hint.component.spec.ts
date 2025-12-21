@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import { provideZoneChangeDetection, NgModule } from '@angular/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ParameterHintComponent } from './parameter-hint.component';
@@ -28,13 +29,16 @@ import {
   platformBrowserTesting,
 } from '@angular/platform-browser/testing';
 
+@NgModule({ providers: [provideZoneChangeDetection()] })
+export class ZoneChangeDetectionModule {}
+
 describe('ParameterHintComponent', () => {
   let fixture: ComponentFixture<ParameterHintComponent>;
   let harnessLoader: HarnessLoader;
   beforeAll(() => {
     TestBed.resetTestEnvironment();
     TestBed.initTestEnvironment(
-      BrowserTestingModule,
+      [ZoneChangeDetectionModule, BrowserTestingModule],
       platformBrowserTesting(),
       { teardown: { destroyAfterEach: false } },
     );
