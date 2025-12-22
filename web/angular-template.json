@@ -21,7 +21,7 @@
               "base": "dist/frontend"
             },
             "index": "src/index.html",
-            "polyfills": ["src/polyfills.ts"],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "sass",
             "assets": ["src/favicon.ico", "src/assets"],
@@ -35,7 +35,7 @@
             "browser": "src/main.ts"
           },
           "configurations": {},
-          "defaultConfiguration": "prod-oss"
+          "defaultConfiguration": "prod"
         },
         "serve": {
           "builder": "@angular/build:dev-server",
@@ -50,7 +50,7 @@
               "buildTarget": "frontend:build:prod"
             }
           },
-          "defaultConfiguration": "dev-oss"
+          "defaultConfiguration": "dev"
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n",
@@ -78,6 +78,26 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+          }
+        },
+        "storybook": {
+          "builder": "@storybook/angular:start-storybook",
+          "options": {
+            "configDir": ".storybook",
+            "browserTarget": "frontend:build",
+            "compodoc": true,
+            "compodocArgs": ["-e", "json", "-d", "."],
+            "port": 6006
+          }
+        },
+        "build-storybook": {
+          "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "configDir": ".storybook",
+            "browserTarget": "frontend:build",
+            "compodoc": true,
+            "compodocArgs": ["-e", "json", "-d", "."],
+            "outputDir": "storybook-static"
           }
         }
       }
