@@ -15,6 +15,7 @@
  */
 
 import { ParentRelationship } from '../generated';
+import { randomString } from '../utils/random';
 import { ResourceEvent } from './event';
 import { ResourceRevision } from './revision';
 
@@ -51,6 +52,9 @@ export class ResourceTimeline {
     public readonly events: ResourceEvent[],
     public readonly parentRelationship: ParentRelationship,
   ) {
+    if (this.timelineId === '') {
+      this.timelineId = randomString(); // If there were no timelineId associated, then generate one to avoid the issue of duplicate timelineId.
+    }
     this.resourcePathFragments = this.resourcePath.split('#');
   }
 
@@ -68,6 +72,14 @@ export class ResourceTimeline {
    */
   public get layer(): TimelineLayer {
     return this.resourcePathFragments.length - 1;
+  }
+
+  /**
+   * Return the name of the layer of this timeline.
+   * eg) returns "kind" for "core/v1#pods" and returns "name" for "core/v1#pods#default#nginx"
+   */
+  public get layerName(): string {
+    return timelineLayerToName(this.layer);
   }
 
   /**

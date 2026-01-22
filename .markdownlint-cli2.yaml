@@ -19,6 +19,7 @@ ignores:
   - "**/node_modules/**"
   - "docs/en/reference/**"
   - "docs/template/**"
+  - "scripts/msdf-generator/vendor/**"
   - SECURITY.md
 config:
   default: true
