@@ -16,6 +16,7 @@ package googlecloudcommon_impl
 
 import (
 	"context"
+	"slices"
 
 	"github.com/GoogleCloudPlatform/khi/pkg/common"
 	"github.com/GoogleCloudPlatform/khi/pkg/core/inspection/formtask"
@@ -25,22 +26,23 @@ import (
 )
 
 // InputLocationsTask defines a form task for inputting the resource location.
-var InputLocationsTask = formtask.NewTextFormTaskBuilder(googlecloudcommon_contract.InputLocationsTaskID, googlecloudcommon_contract.PriorityForResourceIdentifierGroup+4500, "Location").
+var InputLocationsTask = formtask.NewTextFormTaskBuilder(googlecloudcommon_contract.InputLocationsTaskID, googlecloudcommon_contract.PriorityForResourceIdentifierGroup+3000, "Location").
 	WithDependencies([]taskid.UntypedTaskReference{googlecloudcommon_contract.AutocompleteLocationTaskID.Ref()}).
 	WithDescription(
 		"The location(region) to specify the resource exist(s|ed)",
 	).
 	WithDefaultValueFunc(func(ctx context.Context, previousValues []string) (string, error) {
-		if len(previousValues) > 0 {
+		locations := coretask.GetTaskResult(ctx, googlecloudcommon_contract.AutocompleteLocationTaskID.Ref())
+		if len(previousValues) > 0 && slices.Contains(locations.Values, previousValues[0]) {
 			return previousValues[0], nil
 		}
-		return "", nil
+		if len(locations.Values) == 0 {
+			return "", nil
+		}
+		return locations.Values[0], nil
 	}).
 	WithSuggestionsFunc(func(ctx context.Context, value string, previousValues []string) ([]string, error) {
-		if len(previousValues) > 0 { // no need to call twice; should be the same
-			return previousValues, nil
-		}
 		regions := coretask.GetTaskResult(ctx, googlecloudcommon_contract.AutocompleteLocationTaskID.Ref())
-		return common.SortForAutocomplete(value, regions), nil
+		return common.SortForAutocomplete(value, regions.Values), nil
 	}).
 	Build()
