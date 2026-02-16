@@ -369,16 +369,17 @@ export class TimelineRenderer implements GLRenderer<TimelineRendererRenderArgs> 
     gl: WebGL2RenderingContext,
     t: ResourceTimeline,
   ): TimelineRevisionsRenderer {
-    if (this.revisionRenderers.has(t.timelineId)) {
-      return this.revisionRenderers.get(t.timelineId)!;
+    let renderer = this.revisionRenderers.get(t.resourcePath);
+    if (renderer) {
+      return renderer;
     }
-    const renderer = new TimelineRevisionsRenderer(
+    renderer = new TimelineRevisionsRenderer(
       t,
       this.revisionSharedResource,
       this.timelineSharedResource,
     );
     renderer.setup(gl);
-    this.revisionRenderers.put(t.timelineId, renderer);
+    this.revisionRenderers.put(t.resourcePath, renderer);
     return renderer;
   }
 
@@ -393,16 +394,17 @@ export class TimelineRenderer implements GLRenderer<TimelineRendererRenderArgs> 
     gl: WebGL2RenderingContext,
     t: ResourceTimeline,
   ): TimelineEventsRenderer {
-    if (this.eventRenderers.has(t.timelineId)) {
-      return this.eventRenderers.get(t.timelineId)!;
+    let renderer = this.eventRenderers.get(t.resourcePath);
+    if (renderer) {
+      return renderer;
     }
-    const renderer = new TimelineEventsRenderer(
+    renderer = new TimelineEventsRenderer(
       t,
       this.eventSharedResource,
       this.timelineSharedResource,
     );
     renderer.setup(gl);
-    this.eventRenderers.put(t.timelineId, renderer);
+    this.eventRenderers.put(t.resourcePath, renderer);
     return renderer;
   }
 }
